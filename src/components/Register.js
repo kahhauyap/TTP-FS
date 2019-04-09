@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 import './Login.css'
 
-class Login extends Component {
+
+class Register extends Component {
     state = {
         email: '',
+        name: '',
         password: '',
     }
 
@@ -19,10 +21,13 @@ class Login extends Component {
     onSubmit = (event) => {
         event.preventDefault();
         const userData = {
+            name: this.state.name,
             email: this.state.email,
             password: this.state.password
         };
         console.log(userData);
+        const { history } = this.props;
+        history.push('/');
     }
 
     render() {
@@ -30,8 +35,13 @@ class Login extends Component {
             <div className="Login">
                 <h1 className="title">TTP Stock</h1>
                 <div className="login-form">
-                    <h1>Login</h1>
+                    <h1>Register</h1>
                     <Form>
+                        <Form.Group controlId="name">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control type="name" placeholder="Full name" onChange={this.handleInputChange} />
+                        </Form.Group>
+
                         <Form.Group controlId="email">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control type="email" placeholder="Email" onChange={this.handleInputChange} />
@@ -43,14 +53,8 @@ class Login extends Component {
                         </Form.Group>
 
                         <Button className="login-btn" variant="primary" type="submit" onClick={this.onSubmit}>
-                            Login
+                            Sign up
                         </Button>
-
-                        <Link to="/register">
-                            <Button className="login-btn" variant="primary">
-                                Register
-                        </Button>
-                        </Link>
                     </Form>
                 </div>
             </div>
@@ -58,4 +62,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default withRouter(Register);
