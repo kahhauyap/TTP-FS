@@ -1,0 +1,49 @@
+.Login {
+    height: 100vh;
+    background: url('https://images.pexels.com/photos/1661004/pexels-photo-1661004.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')no-repeat;
+    overflow: auto;
+    background-size: cover;
+}
+
+.login-form {
+    width: 35%;
+    border: rgba(255, 255, 255, .8) .5px solid;
+    margin: auto;
+    padding: 30px 30px;
+    margin-top: 15%;
+    background: rgba(0,0,0,.8);
+    -webkit-box-shadow: 2px 0px 53px -16px rgba(0,0,0,1);
+    -moz-box-shadow: 2px 0px 53px -16px rgba(0,0,0,1);
+    box-shadow: 2px 0px 53px -16px rgba(0,0,0,1);
+}
+
+label {
+    color: white;
+}
+
+.login-btn {
+    background:rgb(0, 0, 0, .9) !important;
+    border-color: white !important;
+    margin-left: 2% !important;
+    margin-top: 1%;
+}
+
+.login-btn:hover {
+    background: rgb(58, 58, 58) !important;
+}
+
+input {
+    width: 96% !important;
+    margin: auto!important;
+}
+
+h1 {
+    color: white;
+}
+
+.title {
+    margin-left: 2%;
+    margin-top: 2%;
+    text-shadow: 2px 2px 10px rgb(0, 0, 0);
+    font-weight: bold;
+}
