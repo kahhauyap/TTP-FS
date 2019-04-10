@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { withRouter } from "react-router";
@@ -18,16 +19,18 @@ class Register extends Component {
         })
     }
 
+    // Register user then redirect to login page
     onSubmit = (event) => {
         event.preventDefault();
-        const userData = {
+        axios.post('http://localhost:4000/users/register', {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password
-        };
-        console.log(userData);
-        const { history } = this.props;
-        history.push('/');
+        })
+            .then(() => {
+                const { history } = this.props;
+                history.push('/');
+            }).catch(err => console.log(err));
     }
 
     render() {

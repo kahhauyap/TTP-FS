@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 import { Link } from "react-router-dom";
 import './Login.css'
 
@@ -23,6 +24,14 @@ class Login extends Component {
             password: this.state.password
         };
         console.log(userData);
+
+        axios.post('http://localhost:4000/users/login', {
+            email: this.state.email,
+            password: this.state.password
+        })
+            .then(() => {
+                alert(this.state.email + " logged in!");
+            }).catch(err => console.log(err));
     }
 
     render() {
