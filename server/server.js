@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const passport = require("passport");
-
+var cors = require('cors')
 const users = require("./routes/users");
 
 const app = express();
@@ -10,6 +10,9 @@ const app = express();
 // Bodyparser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
+
+
 
 // mLab MongoDB database
 const mongoDB = 'mongodb://mongodb:password1@ds125673.mlab.com:25673/stocks';
