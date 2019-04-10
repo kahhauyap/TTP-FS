@@ -25,7 +25,7 @@ class Login extends Component {
         };
         console.log(userData);
 
-        axios.post('http://localhost:4000/users/login', {
+        axios.post('/users/login', {
             email: this.state.email,
             password: this.state.password
         })

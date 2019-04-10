@@ -22,7 +22,7 @@ class Register extends Component {
     // Register user then redirect to login page
     onSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:4000/users/register', {
+        axios.post('/users/register', {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password
