@@ -65,12 +65,21 @@ router.post("/login", (req, res) => {
                         });
                     }
                 );
+                req.session.user = email;
             } else { // Password didn't match so send error
                 return res.status(400).json({ passwordincorrect: "Password incorrect" });
             }
         });
     });
 });
+
+router.get("/test", (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).send();
+    }
+    return res.status(200).send("welcome " + req.session.user)
+});
+
 module.exports = router;
 
 

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require("passport");
 var cors = require('cors')
 const users = require("./routes/users");
-
+const session = require("express-session");
 const app = express();
 
 // Bodyparser middleware
@@ -22,6 +22,11 @@ mongoose.connect(mongoDB, { useNewUrlParser: true });
 
 // Passport middleware
 app.use(passport.initialize());
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
 
 // Passport config
 require("./passport")(passport);
