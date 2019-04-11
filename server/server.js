@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require("passport");
 var cors = require('cors')
 const users = require("./routes/users");
+const stocks = require("./routes/stocks");
 const session = require("express-session");
 const app = express();
 
@@ -33,6 +34,7 @@ require("./passport")(passport);
 
 // Routes
 app.use("/users", users);
+app.use("/api", stocks);
 
 // Set port to 3001 if no other port specified
 const port = process.env.PORT || 4000;
