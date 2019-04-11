@@ -31,6 +31,8 @@ class Login extends Component {
         })
             .then(() => {
                 alert(this.state.email + " logged in!");
+                const { history } = this.props;
+                history.push('/register');
             }).catch(err => console.log(err));
     }
 
