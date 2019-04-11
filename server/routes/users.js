@@ -66,6 +66,7 @@ router.post("/login", (req, res) => {
                     }
                 );
                 req.session.user = email;
+
             } else { // Password didn't match so send error
                 return res.status(400).json({ passwordincorrect: "Password incorrect" });
             }
