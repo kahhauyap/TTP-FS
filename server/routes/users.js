@@ -66,6 +66,7 @@ router.post("/login", (req, res) => {
                     }
                 );
                 req.session.user = email;
+                req.session.balance = user.balance;
 
             } else { // Password didn't match so send error
                 return res.status(400).json({ passwordincorrect: "Password incorrect" });
@@ -88,6 +89,21 @@ router.get("/auth", (req, res) => {
     return res.status(200).send(req.session.user);
 });
 
+router.get("/balance", (req, res, next) => {
+
+    if (!req.session.user) {
+        console.log("not logged ni")
+        return res.status(401).send();
+    }
+
+    User.findOne({ email: req.session.user }).then(user => {
+        if (!user) {
+            return res.status(400).send("User doesn't exist");
+        }
+        console.log(user.balance);
+        return res.status(200).send(user);
+    })
+});
 
 
 module.exports = router;

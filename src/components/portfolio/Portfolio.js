@@ -10,6 +10,7 @@ class Portfolio extends Component {
         balance: 0,
         stocks: [],
         symbol: '',
+        shares: 1,
         isLoading: true
     }
 
@@ -49,7 +50,7 @@ class Portfolio extends Component {
 
     // Fetch stock information and purchase if balance is enough
     buyStock = () => {
-        axios.get(`/api/fetch/${this.state.symbol}`)
+        axios.get(`/api/fetch/${this.state.symbol}/${this.state.shares}`)
             .then(response => console.log(response.data))
             .catch(error => {
                 if (error.response) {
