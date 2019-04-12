@@ -81,7 +81,7 @@ router.get("/logout", (req, res) => {
     return res.status(400);
 })
 
-router.get("/test", (req, res) => {
+router.get("/auth", (req, res) => {
     if (!req.session.user) {
         return res.status(401).send();
     }

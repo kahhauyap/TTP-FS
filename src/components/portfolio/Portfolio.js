@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import './Portfolio.css'
 
 class Portfolio extends Component {
     state = {
@@ -16,19 +17,21 @@ class Portfolio extends Component {
     }
 
     authenticateUser = () => {
-        axios.get('/users/test')
+        axios.get('/users/auth')
             .then(response => {
                 console.log(response);
                 this.setState({
-                    user: response.data
+                    user: response.data,
+                    isLoading: false
                 })
             })
             .catch(error => {
                 if (error.response) {
                     console.log(error.response);
+                    const { history } = this.props;
+                    history.push('/');
                 }
             })
-
 
     }
 
@@ -37,18 +40,26 @@ class Portfolio extends Component {
         axios.get('/users/logout')
             .catch(err => {
                 console.log(err);
-                history.push('/');
             });
         history.push('/');
     }
 
     render() {
-        return (
-            <div>
-                Welcome {this.state.user}
-                <button onClick={this.logoutUser}>Logout</button>
-            </div>
-        );
+        if (this.state.isLoading) {
+            return (<div>Loading...</div>)
+        } else {
+            return (
+                <div>
+                    <div className="greetings">
+                        <h1>Welcome {this.state.user}</h1>
+                    </div>
+
+                    <Button className="logout-btn" variant="primary" onClick={this.logoutUser}>
+                        Logout
+                    </Button>
+                </div>
+            );
+        }
     };
 }
 

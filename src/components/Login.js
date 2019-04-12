@@ -30,7 +30,7 @@ class Login extends Component {
             password: this.state.password
         })
             .then(() => {
-                alert(this.state.email + " logged in!");
+                console.log(this.state.email + " logged in!");
                 const { history } = this.props;
                 history.push('/portfolio');
             }).catch(err => console.log(err));

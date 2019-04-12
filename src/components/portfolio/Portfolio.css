@@ -1,0 +1,15 @@
+.greetings h1 {
+    color: black;
+}
+
+
+.logout-btn {
+    background:rgb(0, 0, 0, .9) !important;
+    border-color: white !important;
+    margin-left: 2% !important;
+    margin-top: 1%;
+}
+
+.logout-btn:hover {
+    background: rgb(58, 58, 58) !important;
+}
