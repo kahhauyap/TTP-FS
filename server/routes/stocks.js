@@ -6,8 +6,8 @@ const link = "https://api.iextrading.com/1.0/stock/aapl/quote";
 const symbol = "aapl";
 
 // Fetch from IEX API
-router.get("/stocks", (req, res, next) => {
-    axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/quote`)
+router.get("/fetch/:symbol", (req, res, next) => {
+    axios.get(`https://api.iextrading.com/1.0/stock/${req.params.symbol}/quote`)
         .then(response => res.send(response.data))
         .catch(error => next(error));
 });

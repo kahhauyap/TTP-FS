@@ -2,14 +2,33 @@
     color: black;
 }
 
-
-.logout-btn {
+.btn {
     background:rgb(0, 0, 0, .9) !important;
     border-color: white !important;
-    margin-left: 2% !important;
+}
+
+.logout-btn {
+    margin-left: 2%;
     margin-top: 1%;
+}
+
+.buy-btn {
+    margin-left: 1%;
 }
 
 .logout-btn:hover {
     background: rgb(58, 58, 58) !important;
+}
+
+.symbol-label {
+    color: black !important;
+}
+
+.stock-form .form-group {
+    width: 20%;
+}
+
+.stock-form {
+    margin-left: 20%;
+    margin-top: 5%;
 }
