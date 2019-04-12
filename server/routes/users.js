@@ -74,12 +74,21 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.get("/logout", (req, res) => {
+    if (req.session.user) {
+        req.session.destroy();
+    }
+    return res.status(400);
+})
+
 router.get("/test", (req, res) => {
     if (!req.session.user) {
         return res.status(401).send();
     }
-    return res.status(200).send("welcome " + req.session.user)
+    return res.status(200).send(req.session.user);
 });
+
+
 
 module.exports = router;
 

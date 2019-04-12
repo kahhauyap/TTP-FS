@@ -32,7 +32,7 @@ class Login extends Component {
             .then(() => {
                 alert(this.state.email + " logged in!");
                 const { history } = this.props;
-                history.push('/register');
+                history.push('/portfolio');
             }).catch(err => console.log(err));
     }
 
