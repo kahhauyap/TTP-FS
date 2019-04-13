@@ -11,7 +11,8 @@ class Portfolio extends Component {
         stocks: [],
         symbol: '',
         shares: 1,
-        isLoading: true
+        isLoading: true,
+        error: ''
     }
 
     componentDidMount() {
@@ -54,11 +55,11 @@ class Portfolio extends Component {
             .then(response => console.log(response.data))
             .catch(error => {
                 if (error.response) {
-                    console.log(error.response);
-                    const { history } = this.props;
-                    history.push('/');
+                    console.log("found404: " + error.response);
+                    this.setState({ error: "Not a valid symbol" })
                 }
             })
+        this.setState({ error: '' })
     }
 
     // Update state with input values
@@ -90,6 +91,7 @@ class Portfolio extends Component {
                         <Button className="buy-btn btn" variant="primary" onClick={this.buyStock}>
                             Buy
                     </Button>
+                        {this.state.error}
                     </div>
 
                 </div>
