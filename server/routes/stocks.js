@@ -23,9 +23,21 @@ router.get("/fetch/:symbol/:shares", (req, res, next) => {
                 }
             }).catch(error => next(error + "sdsd"));
 */
-            let totalPrice = (latestPrice * req.params.shares);
+            let totalPrice = latestPrice * req.params.shares;
             if (req.session.balance > totalPrice) {
-                return res.send("Balance " + (req.session.balance - totalPrice));
+                let newBalance = Math.round((req.session.balance - totalPrice) * 100) / 100;
+                //    return res.send("Balance " + (req.session.balance - totalPrice));
+                User.findOneAndUpdate({ email: req.session.user }, { balance: newBalance }, { upsert: true }, (error) => {
+                    if (error) return res.send(500, { error: error });
+                    req.session.balance = newBalance;
+                    const newData = {
+                        balance: newBalance
+                    }
+                    return res.send(newData);
+                });
+            }
+            else {
+                return res.status(400).send("Not enough balance!");
             }
         }
             //res.send(response.data) 
@@ -48,5 +60,7 @@ router.get("/balance", (req, res, next) => {
         return res.status(200).send(user);
     })
 });
+
+
 
 module.exports = router;

@@ -86,7 +86,11 @@ router.get("/auth", (req, res) => {
     if (!req.session.user) {
         return res.status(401).send();
     }
-    return res.status(200).send(req.session.user);
+    const userData = {
+        user: req.session.user,
+        balance: req.session.balance
+    }
+    return res.status(200).send(userData);
 });
 
 router.get("/balance", (req, res, next) => {

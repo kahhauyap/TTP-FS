@@ -25,7 +25,8 @@ class Portfolio extends Component {
             .then(response => {
                 console.log(response);
                 this.setState({
-                    user: response.data,
+                    user: response.data.user,
+                    balance: response.data.balance,
                     isLoading: false
                 })
             })
@@ -49,14 +50,21 @@ class Portfolio extends Component {
         history.push('/');
     }
 
-    // Fetch stock information and purchase if balance is enough
+    // Fetch stock information and purchase if balance is enough and symbol is valid
     buyStock = () => {
         axios.get(`/api/fetch/${this.state.symbol}/${this.state.shares}`)
-            .then(response => console.log(response.data))
+            .then(response => {
+                console.log(response.data)
+                this.setState({ balance: response.data.balance });
+            }
+            )
             .catch(error => {
                 if (error.response) {
-                    console.log("found404: " + error.response);
-                    this.setState({ error: "Not a valid symbol" })
+                    if (error.response.status === 400) {
+                        this.setState({ error: "Not enough balance!" })
+                    } else if (error.response.status === 500) {
+                        this.setState({ error: "Not a valid symbol!" })
+                    }
                 }
             })
         this.setState({ error: '' })
@@ -70,13 +78,15 @@ class Portfolio extends Component {
     }
 
     render() {
-        if (this.state.isLoading) {
-            return (<div>Loading...</div>)
-        } else {
-            return (
+
+        return (
+            this.state.isLoading ?
+                <div>Loading...</div>
+                :
                 <div>
                     <div className="greetings">
                         <h1>Welcome {this.state.user}</h1>
+                        <h2>{this.state.balance}</h2>
                     </div>
 
                     <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>
@@ -88,16 +98,22 @@ class Portfolio extends Component {
                             <Form.Control type="symbol" placeholder="Symbol" onChange={this.handleInputChange} />
                         </Form.Group>
 
+                        <Form.Group controlId="shares">
+                            <Form.Label className="symbol-label">Shares</Form.Label>
+                            <Form.Control type="shares" placeholder="Shares" onChange={this.handleInputChange} />
+                        </Form.Group>
+
                         <Button className="buy-btn btn" variant="primary" onClick={this.buyStock}>
                             Buy
-                    </Button>
+                         </Button>
+                        <br></br>
                         {this.state.error}
                     </div>
 
                 </div>
-            );
-        }
-    };
-}
+        );
+    }
+};
+
 
 export default Portfolio;
