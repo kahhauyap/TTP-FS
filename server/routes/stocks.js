@@ -2,10 +2,9 @@ const axios = require('axios');
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
-const link = "https://api.iextrading.com/1.0/stock/aapl/quote";
-const symbol = "aapl";
+const Transaction = require("../models/Transaction");
 
-// Fetch from IEX API
+// Purchase stock if user has enough balance and insert transaction to database
 router.get("/fetch/:symbol/:shares", (req, res, next) => {
     axios.get(`https://api.iextrading.com/1.0/stock/${req.params.symbol}/quote`)
         .then(response => {
@@ -24,9 +23,11 @@ router.get("/fetch/:symbol/:shares", (req, res, next) => {
             }).catch(error => next(error + "sdsd"));
 */
             let totalPrice = latestPrice * req.params.shares;
+
+            // Update if user has enough balance to make transaction
             if (req.session.balance > totalPrice) {
                 let newBalance = Math.round((req.session.balance - totalPrice) * 100) / 100;
-                //    return res.send("Balance " + (req.session.balance - totalPrice));
+                // Update the user's balance
                 User.findOneAndUpdate({ email: req.session.user }, { balance: newBalance }, { upsert: true }, (error) => {
                     if (error) return res.send(500, { error: error });
                     req.session.balance = newBalance;
@@ -35,6 +36,15 @@ router.get("/fetch/:symbol/:shares", (req, res, next) => {
                     }
                     return res.send(newData);
                 });
+
+                // Create transaction entry in database
+                axios.post('http://localhost:4000/api/transaction', {
+                    user: req.session.user,
+                    symbol: symbol,
+                    shares: req.params.shares,
+                    price: totalPrice
+                })
+                    .catch(err => console.log(err));
             }
             else {
                 return res.status(400).send("Not enough balance!");
@@ -45,10 +55,10 @@ router.get("/fetch/:symbol/:shares", (req, res, next) => {
         .catch(error => next(error));
 });
 
+//Get the user's balance
 router.get("/balance", (req, res, next) => {
-
     if (!req.session.user) {
-        console.log("not logged ni")
+        console.log("not logged in")
         return res.status(401).send();
     }
 
@@ -61,6 +71,32 @@ router.get("/balance", (req, res, next) => {
     })
 });
 
+// Save user transaction into database
+router.post("/transaction", (req, res) => {
+    const { user, symbol, shares, price } = req.body;
+    const newTransaction = new Transaction({
+        user,
+        symbol,
+        shares,
+        price
+    })
 
+    newTransaction
+        .save()
+        .then(transaction => res.json(transaction))
+        .catch(err => console.log(err));
+
+    //  return res.status(200).send(newTransaction);
+});
+
+// Get all transactions for a user
+router.get("/transaction", (req, res) => {
+    Transaction.find({ user: req.body.user }).then(transaction => {
+        if (!transaction) {
+            return res.status(400).send("User not found!");
+        }
+        return res.status(200).send(transaction);
+    });
+});
 
 module.exports = router;

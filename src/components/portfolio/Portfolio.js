@@ -67,7 +67,7 @@ class Portfolio extends Component {
                     }
                 }
             })
-        this.setState({ error: '' })
+        this.setState({ error: `Purchased ${this.state.shares} ${this.state.symbol} share(s)` })
     }
 
     // Update state with input values
@@ -106,7 +106,7 @@ class Portfolio extends Component {
                         <Button className="buy-btn btn" variant="primary" onClick={this.buyStock}>
                             Buy
                          </Button>
-                        <br></br>
+                        <br></br><br></br>
                         {this.state.error}
                     </div>
 
