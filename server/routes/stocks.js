@@ -114,6 +114,23 @@ router.get("/portfolio", (req, res) => {
                     portfolio[response.symbol] += response.shares;
                 }
             })
+
+            for (var stock in portfolio) {
+                if (portfolio.hasOwnProperty(stock)) {
+                    axios.get(`https://api.iextrading.com/1.0/stock/${stock}/quote`)
+                        .then(response => {
+                            const { latestPrice, open } = response.data;
+                            let stockStatus = open - latestPrice;
+                            if (stockStatus < open)
+                                stock.status = 'low'
+                            else if (stockStatus > open)
+                                stock.status = 'high'
+                            else
+                                stock.status = 'neutral'
+
+                        }).catch(error => console.log(error))
+                }
+            }
             return res.status(200).send(portfolio)
         }).catch(error => res.status(401).send(error))
 });
