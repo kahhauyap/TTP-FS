@@ -8,7 +8,7 @@ class Portfolio extends Component {
     state = {
         user: '',
         balance: 0,
-        stocks: [],
+        portfolio: {},
         symbol: '',
         shares: 1,
         isLoading: true,
@@ -17,6 +17,7 @@ class Portfolio extends Component {
 
     componentDidMount() {
         this.authenticateUser();
+        this.getPortfolio();
     }
 
     // Check if there is a session for current user
@@ -44,8 +45,8 @@ class Portfolio extends Component {
     logoutUser = () => {
         const { history } = this.props;
         axios.get('/users/logout')
-            .catch(err => {
-                console.log(err);
+            .catch(error => {
+                console.log(error);
             });
         history.push('/');
     }
@@ -55,9 +56,9 @@ class Portfolio extends Component {
         axios.get(`/api/fetch/${this.state.symbol}/${this.state.shares}`)
             .then(response => {
                 console.log(response.data)
+                this.getPortfolio();
                 this.setState({ balance: response.data.balance });
-            }
-            )
+            })
             .catch(error => {
                 if (error.response) {
                     if (error.response.status === 400) {
@@ -70,6 +71,17 @@ class Portfolio extends Component {
         this.setState({ error: `Purchased ${this.state.shares} ${this.state.symbol} share(s)` })
     }
 
+    getPortfolio = () => {
+        axios.get("/api/portfolio")
+            .then(response => {
+                this.setState({ portfolio: response.data });
+                console.log(this.state.portfolio)
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
     // Update state with input values
     handleInputChange = (event) => {
         this.setState({
@@ -77,7 +89,16 @@ class Portfolio extends Component {
         })
     }
 
+    mapObject = (object, callback) => {
+        return Object.keys(object).map(function (key) {
+            return callback(key, object[key]);
+        });
+    }
+
     render() {
+        let stocks = this.mapObject(this.state.portfolio, (key, value) => {
+            return (<li key={key}>{key}, {value}</li>)
+        });
 
         return (
             this.state.isLoading ?
@@ -92,6 +113,7 @@ class Portfolio extends Component {
                     <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>
                         Logout
                     </Button>
+
                     <div className="stock-form">
                         <Form.Group controlId="symbol">
                             <Form.Label className="symbol-label">Symbol</Form.Label>
@@ -110,6 +132,7 @@ class Portfolio extends Component {
                         {this.state.error}
                     </div>
 
+                    <ul>{stocks}</ul>
                 </div>
         );
     }

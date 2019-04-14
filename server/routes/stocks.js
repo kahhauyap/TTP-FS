@@ -38,7 +38,7 @@ router.get("/fetch/:symbol/:shares", (req, res, next) => {
                 });
 
                 // Create transaction entry in database
-                axios.post('http://localhost:4000/api/transaction', {
+                axios.post('http://localhost:4000/api/transactions', {
                     user: req.session.user,
                     symbol: symbol,
                     shares: req.params.shares,
@@ -62,6 +62,7 @@ router.get("/balance", (req, res, next) => {
         return res.status(401).send();
     }
 
+    // Find a user and return the balance
     User.findOne({ email: req.session.user }).then(user => {
         if (!user) {
             return res.status(400).send("User doesn't exist");
@@ -72,7 +73,7 @@ router.get("/balance", (req, res, next) => {
 });
 
 // Save user transaction into database
-router.post("/transaction", (req, res) => {
+router.post("/transactions", (req, res) => {
     const { user, symbol, shares, price } = req.body;
     const newTransaction = new Transaction({
         user,
@@ -90,13 +91,32 @@ router.post("/transaction", (req, res) => {
 });
 
 // Get all transactions for a user
-router.get("/transaction", (req, res) => {
-    Transaction.find({ user: req.body.user }).then(transaction => {
+router.get("/transactions/:user", (req, res) => {
+    Transaction.find({ user: req.params.user }).then(transaction => {
         if (!transaction) {
             return res.status(400).send("User not found!");
         }
         return res.status(200).send(transaction);
     });
 });
+
+// Get all transactions for a user and organizing into a portfolio object
+router.get("/portfolio", (req, res) => {
+    // Fetch all transactions from a user
+    axios.get(`http://localhost:4000/api/transactions/${req.session.user}`)
+        .then(response => {
+            // Create an object to store the stock and amount of shares a user has
+            let portfolio = {};
+            response.data.forEach(response => {
+                if (!portfolio.hasOwnProperty(response.symbol)) {
+                    portfolio[response.symbol] = response.shares;
+                } else {
+                    portfolio[response.symbol] += response.shares;
+                }
+            })
+            return res.status(200).send(portfolio)
+        }).catch(error => res.status(401).send(error))
+});
+
 
 module.exports = router;
