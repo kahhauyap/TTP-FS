@@ -59,7 +59,7 @@ class Transactions extends Component {
     // Format the list of transactions pulling the details
     formatList = () => {
         let transactions = this.state.transactions.map(transaction =>
-            <li key={transaction}>BUY ({transaction.symbol}) - {transaction.shares} Shares @ {transaction.price} </li>
+            <li className="transaction" key={transaction}>BUY ({transaction.symbol}) - {transaction.shares} Shares @ {transaction.price} </li>
         )
         return transactions;
     }
@@ -70,9 +70,9 @@ class Transactions extends Component {
             this.state.isLoading ?
                 <div>Loading...</div>
                 :
-                <div>
+                <div className="background">
                     <div>
-                        <h1 className="header" style={{ color: "black", fontWeight: "bold" }}>Transactions</h1>
+                        <h1 className="header">Transactions</h1>
                     </div>
                     <div className="navigation">
                         <Button className="portfolio-btn btn" variant="primary" onClick={this.redirectPortfolio}>
@@ -83,7 +83,7 @@ class Transactions extends Component {
                     </Button>
                     </div>
 
-                    <div>
+                    <div className="back-drop">
                         <ul className="list">{transactions}</ul>
                     </div>
                 </div >

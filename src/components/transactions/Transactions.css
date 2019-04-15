@@ -1,0 +1,58 @@
+.list {
+    list-style: none;
+    overflow:hidden; 
+    overflow-y:scroll;
+    margin:  auto;
+    height: 100%;
+    border: 1px green solid;
+    padding-inline-start: 0;
+}
+
+.transaction {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+  
+    padding-top: 20px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    background: rgba(255, 255, 255, .0);
+}
+
+.transaction:after {
+    content: ""; /* This is necessary for the pseudo element to work. */ 
+    display: block; /* This will put the pseudo element on its own line. */
+    margin: 0 auto; /* This will center the border. */
+    width: 60%; /* Change this to whatever width you want. */
+    padding-top: 20px; /* This creates some space between the element and the border. */
+    border-bottom: 1px solid rgb(255, 255, 255); /* This creates the border. Replace black with whatever color you want. */
+}
+
+.background {
+    background: #BBD2C5;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #292E49, #536976, #BBD2C5);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #292E49, #536976, #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 100vh;
+}
+
+.header {
+    padding-top: 50px;
+    padding-left: 50px;
+}
+
+.back-drop {
+    background: rgba(255, 255, 255, .2);
+    width: 40%;
+    height: 700px;
+    margin-left: 15%;
+    margin-top: 5%;
+}
+
+.btn {
+    border-radius: 30px !important;
+    background: #1abc9c !important;  /* fallback for old browsers */
+    border: rgba(255, 255, 255, 0) !important;
+    margin: auto !important;
+    padding: 10px 15px !important;
+    margin-right: 10px !important;
+}
