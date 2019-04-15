@@ -100,6 +100,16 @@ router.get("/transactions/:user", (req, res) => {
     });
 });
 
+// Get all transactions for a user
+router.get("/transactions", (req, res) => {
+    Transaction.find({ user: req.session.user }).then(transaction => {
+        if (!transaction) {
+            return res.status(400).send("User not found!");
+        }
+        return res.status(200).send(transaction);
+    });
+});
+
 // Get all transactions for a user and organizing into a portfolio object
 router.get("/portfolio", (req, res) => {
     // Fetch all transactions from a user

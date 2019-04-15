@@ -32,3 +32,11 @@
     margin-left: 20%;
     margin-top: 5%;
 }
+
+.navigation {
+    position:absolute;
+    top:0;
+    right:0;
+    display: inline-block;
+    margin: 2em;
+}

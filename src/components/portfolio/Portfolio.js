@@ -13,7 +13,8 @@ class Portfolio extends Component {
         shares: 1,
         isLoading: true,
         error: '',
-        loadPortfolio: true
+        loadPortfolio: true,
+        temp: ['1', '2']
     }
 
     componentDidMount() {
@@ -28,8 +29,7 @@ class Portfolio extends Component {
                 console.log(response);
                 this.setState({
                     user: response.data.user,
-                    balance: response.data.balance,
-                    isLoading: false
+                    balance: response.data.balance
                 })
             })
             .catch(error => {
@@ -39,7 +39,6 @@ class Portfolio extends Component {
                     history.push('/');
                 }
             })
-
     }
 
     // Lougout user and redirect user to login
@@ -52,9 +51,22 @@ class Portfolio extends Component {
         history.push('/');
     }
 
+    // Redirect user to transactions page
+    redirectTransactions = () => {
+        const { history } = this.props;
+        history.push('/transactions');
+    }
+
+    // Redirect user to portfolio page
+    redirectPortfolio = () => {
+        const { history } = this.props;
+        history.push('/portfolio');
+    }
+
     // Fetch stock information and purchase if balance is enough and symbol is valid
     buyStock = () => {
-        axios.get(`/api/fetch/${this.state.symbol}/${this.state.shares}`)
+        let symbol = this.state.symbol.toUpperCase();
+        axios.get(`/api/fetch/${symbol}/${this.state.shares}`)
             .then(response => {
                 console.log(response.data)
                 this.getPortfolio();
@@ -69,13 +81,13 @@ class Portfolio extends Component {
                     }
                 }
             })
-        this.setState({ error: `Purchased ${this.state.shares} ${this.state.symbol} share(s)` })
+        this.setState({ error: `Purchased ${this.state.shares} ${symbol} share(s)` })
     }
 
     getPortfolio = () => {
         axios.get("/api/portfolio")
             .then(response => {
-                this.setState({ portfolio: response.data });
+                this.setState({ portfolio: response.data, isLoading: false });
                 console.log(this.state.portfolio)
             })
             .catch(error => {
@@ -97,6 +109,7 @@ class Portfolio extends Component {
 
     }
 
+
     maps = () => {
         let status = 'neutral';
         let stocks = this.mapObject(this.state.portfolio, (stock, value) => {
@@ -113,8 +126,6 @@ class Portfolio extends Component {
                         status = 'high'
                     else
                         status = 'neutral'
-                    console.log(stock + value + status)
-
 
                     if (status === 'neutral')
                         style = { color: 'blue' };
@@ -122,7 +133,6 @@ class Portfolio extends Component {
                         style = { color: 'red' };
                     else
                         style = { color: 'green' };
-
                     return (<li key={stock} style={style}>{stock} - {value} - {status}</li>)
                 })
 
@@ -138,6 +148,7 @@ class Portfolio extends Component {
     render() {
         let stocks = this.maps();
 
+
         return (
             this.state.isLoading ?
                 <div>Loading...</div>
@@ -146,6 +157,15 @@ class Portfolio extends Component {
                     <div className="greetings">
                         <h1>Welcome {this.state.user}</h1>
                         <h2>{this.state.balance}</h2>
+                    </div>
+
+                    <div className="navigation">
+                        <Button className="portfolio-btn btn" variant="primary" onClick={this.redirectPortfolio}>
+                            Portfolio
+                        </Button>
+                        <Button className="transaction-btn btn" variant="primary" onClick={this.redirectTransactions}>
+                            Transactions
+                     </Button>
                     </div>
 
                     <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>
