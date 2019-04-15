@@ -1,3 +1,9 @@
+.bg {
+    background: #000000;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 100vh;
+}
 .greetings h1 {
     color: black;
 }
@@ -12,25 +18,34 @@
     margin-top: 1%;
 }
 
-.buy-btn {
-    margin-left: 1%;
-}
-
 .logout-btn:hover {
     background: rgb(58, 58, 58) !important;
 }
 
-.symbol-label {
+.buy-btn {
+    width: 100%;
+    margin-top: 15px;
+    background: rgba(255, 255, 255, 0) !important;
+}
+
+.buy-btn:hover {
+    background: rgba(58, 58, 58, .8) !important;
+}
+
+.symbol-label s {
     color: black !important;
 }
 
-.stock-form .form-group {
-    width: 20%;
-}
-
 .stock-form {
-    margin-left: 20%;
-    margin-top: 5%;
+    margin: auto;
+    width: 500px;
+
+    padding: 20px 20px;
+    border: rgba(255, 255, 255, .8) .5px solid;
+   
+    padding: 30px 30px;
+    margin-top: 15%;
+    background: rgba(0,0,0,.8);
 }
 
 .navigation {
@@ -39,4 +54,31 @@
     right:0;
     display: inline-block;
     margin: 2em;
+}
+
+
+.alert-msg {
+    color: white;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 80%;
+}
+.left-container {
+    flex: 50%;
+}
+.right-container {
+    flex: 50%;
+}
+
+.portfolio-list {
+    list-style: none;
+    color: white;
+    font-size: 30px;
+    margin-top: 20%;
+    margin-right: 5%;
+    text-align: center;
+    background: rgba(66, 120, 170, 0.5);
 }

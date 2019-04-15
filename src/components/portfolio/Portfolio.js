@@ -113,7 +113,7 @@ class Portfolio extends Component {
     maps = () => {
         let status = 'neutral';
         let stocks = this.mapObject(this.state.portfolio, (stock, value) => {
-            let style = { color: 'green' };
+            let style = { color: 'white' };
             // Get prices for stock shares
             axios.get(`https://api.iextrading.com/1.0/stock/${stock}/quote`)
                 .then(response => {
@@ -153,7 +153,7 @@ class Portfolio extends Component {
             this.state.isLoading ?
                 <div>Loading...</div>
                 :
-                <div>
+                <div className="background">
                     <div className="greetings">
                         <h1>Welcome {this.state.user}</h1>
                         <h2>{this.state.balance}</h2>
@@ -172,25 +172,35 @@ class Portfolio extends Component {
                         Logout
                     </Button>
 
-                    <div className="stock-form">
-                        <Form.Group controlId="symbol">
-                            <Form.Label className="symbol-label">Symbol</Form.Label>
-                            <Form.Control type="symbol" placeholder="Symbol" onChange={this.handleInputChange} />
-                        </Form.Group>
+                    <div className="container">
+                        <div className="right-container">
+                            <ul className="portfolio-list">{stocks}</ul>
+                        </div>
 
-                        <Form.Group controlId="shares">
-                            <Form.Label className="symbol-label">Shares</Form.Label>
-                            <Form.Control type="shares" placeholder="Shares" onChange={this.handleInputChange} />
-                        </Form.Group>
 
-                        <Button className="buy-btn btn" variant="primary" onClick={this.buyStock}>
-                            Buy
-                         </Button>
-                        <br></br><br></br>
-                        {this.state.error}
+                        <div className="left-container">
+                            <div className="stock-form">
+                                <h2 style={{ color: "white", textAlign: "center"}}>Balance: {this.state.balance}</h2>
+                                <br></br>
+                                <Form.Group controlId="symbol">
+                                    <Form.Label className="symbol-label">Symbol</Form.Label>
+                                    <Form.Control type="symbol" placeholder="Symbol" onChange={this.handleInputChange} />
+                                </Form.Group>
+
+                                <Form.Group controlId="shares">
+                                    <Form.Label className="symbol-label">Shares</Form.Label>
+                                    <Form.Control type="shares" placeholder="Shares" onChange={this.handleInputChange} />
+                                </Form.Group>
+
+                                <Button className="buy-btn btn" variant="primary" onClick={this.buyStock}>
+                                    Buy
+                            </Button>
+                                <br></br><br></br>
+                                <div className="alert-msg">{this.state.error} &nbsp;</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <ul>{stocks}</ul>
                 </div>
         );
     }
