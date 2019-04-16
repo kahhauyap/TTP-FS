@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const secretKey = "banana";
 
-// Registration route
+// Registration endpoint checks if user exists then creates an account if not
 router.post("/register", (req, res) => {
     // Check the database to see if the email already exists
     User.findOne({ email: req.body.email }).then(user => {
@@ -38,6 +38,7 @@ router.post("/register", (req, res) => {
     });
 });
 
+// Login endpoint validates user and creates a session
 router.post("/login", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -45,7 +46,7 @@ router.post("/login", (req, res) => {
     // Find user by email
     User.findOne({ email }).then(user => {
         if (!user) {
-            return res.status(404).json({ emailnotfound: "Email not found" });
+            return res.status(404).send("Email not found");
         }
         // Compare the password with hash
         bcrypt.compare(password, user.password).then(isMatch => {
@@ -75,6 +76,7 @@ router.post("/login", (req, res) => {
     });
 });
 
+// Logout endpoint destroys session
 router.get("/logout", (req, res) => {
     if (req.session.user) {
         req.session.destroy();
@@ -82,6 +84,7 @@ router.get("/logout", (req, res) => {
     return res.status(400);
 })
 
+// Authorization endpoint checks if user is logged in
 router.get("/auth", (req, res) => {
     if (!req.session.user) {
         return res.status(401).send();
@@ -93,11 +96,11 @@ router.get("/auth", (req, res) => {
     return res.status(200).send(userData);
 });
 
+// @@@@@ Endpoint to retrieve user balance
 router.get("/balance", (req, res, next) => {
 
     if (!req.session.user) {
-        console.log("not logged ni")
-        return res.status(401).send();
+        return res.status(401).send("Not logged in!");
     }
 
     User.findOne({ email: req.session.user }).then(user => {

@@ -23,14 +23,12 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        console.log(userData);
 
         axios.post('/users/login', {
             email: this.state.email,
             password: this.state.password
         })
             .then(() => {
-                console.log(this.state.email + " logged in!");
                 const { history } = this.props;
                 history.push('/portfolio');
             }).catch(err => console.log(err));

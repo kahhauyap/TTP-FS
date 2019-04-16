@@ -11,17 +11,7 @@ router.get("/fetch/:symbol/:shares", (req, res, next) => {
             if (!req.session.user) {
                 return res.status(401).send("Not logged in!");
             }
-            const { symbol, latestPrice, open } = response.data;
-            // Send relevant stock information back
-            //     res.send({symbol,latestPrice,open});
-            /*
-            axios.get('http://localhost:4000/api/balance').then(user => {
-                let totalPrice = (latestPrice * req.params.shares);
-                if (user.balance > totalPrice) {
-                    return res.send(user.balance - totalPrice);
-                }
-            }).catch(error => next(error + "sdsd"));
-*/
+            const { symbol, latestPrice } = response.data;
             let totalPrice = latestPrice * req.params.shares;
 
             // Update if user has enough balance to make transaction
@@ -47,15 +37,13 @@ router.get("/fetch/:symbol/:shares", (req, res, next) => {
                     .catch(err => console.log(err));
             }
             else {
-                return res.status(400).send("Not enough balance!");
+                return res.status(402);
             }
-        }
-            //res.send(response.data) 
-        )
+        })
         .catch(error => next(error));
 });
 
-//Get the user's balance
+// Get the user's balance
 router.get("/balance", (req, res, next) => {
     if (!req.session.user) {
         console.log("not logged in")
@@ -80,13 +68,12 @@ router.post("/transactions", (req, res) => {
         shares,
         price
     })
-
     newTransaction
         .save()
         .then(transaction => res.json(transaction))
         .catch(err => console.log(err));
 
-    //  return res.status(200).send(newTransaction);
+    return res.status(200).send(newTransaction);
 });
 
 // Get all transactions for a user
@@ -110,7 +97,7 @@ router.get("/transactions", (req, res) => {
 });
 
 // Get all transactions for a user and organize into a portfolio object
-router.get("/portfolio", (req, res) => { 
+router.get("/portfolio", (req, res) => {
     // Fetch all transactions from a user
     axios.get(`http://localhost:4000/api/transactions/${req.session.user}`)
         .then(response => {
@@ -119,9 +106,9 @@ router.get("/portfolio", (req, res) => {
             // Create a portfolio object with the symbols as the properties and set the number of shares
             response.data.forEach(response => {
                 if (!portfolio.hasOwnProperty(response.symbol)) {
-                    portfolio[response.symbol] = {shares: response.shares};
+                    portfolio[response.symbol] = { shares: response.shares };
                     // Create string of symbols for a batch API request
-                    querySymbols += response.symbol + ','; 
+                    querySymbols += response.symbol + ',';
                 } else {
                     portfolio[response.symbol].shares += response.shares;
                 }
@@ -130,7 +117,7 @@ router.get("/portfolio", (req, res) => {
             querySymbols = querySymbols.slice(0, -1); // Remove the trailing ','
 
             // Call the API with the batch of symbols and format the portfolio object
-             axios.get(`https://api.iextrading.com/1.0/stock/market/batch?symbols=${querySymbols}&types=quote`)
+            axios.get(`https://api.iextrading.com/1.0/stock/market/batch?symbols=${querySymbols}&types=quote`)
                 .then(response => {
                     for (var stock in response.data) {
                         if (portfolio.hasOwnProperty(stock)) {
@@ -151,11 +138,8 @@ router.get("/portfolio", (req, res) => {
                         }
                         portfolioList.push(stockData);
                     }
-//                    console.log(portfolioList);
-
-//                    return res.status(200).send(portfolio);
-                        return res.status(200).send(portfolioList);
-                })  
+                    return res.status(200).send(portfolioList);
+                })
                 .catch(res.status(400))
         })
         .catch(res.status(400))
