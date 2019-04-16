@@ -67,7 +67,6 @@ router.get("/balance", (req, res, next) => {
         if (!user) {
             return res.status(400).send("User doesn't exist");
         }
-        console.log(user.balance);
         return res.status(200).send(user);
     })
 });
@@ -110,39 +109,56 @@ router.get("/transactions", (req, res) => {
     });
 });
 
-// Get all transactions for a user and organizing into a portfolio object
-router.get("/portfolio", (req, res) => {
+// Get all transactions for a user and organize into a portfolio object
+router.get("/portfolio", (req, res) => { 
     // Fetch all transactions from a user
     axios.get(`http://localhost:4000/api/transactions/${req.session.user}`)
         .then(response => {
-            // Create an object to store the stock and amount of shares a user has
             let portfolio = {};
+            let querySymbols = '';
+            // Create a portfolio object with the symbols as the properties and set the number of shares
             response.data.forEach(response => {
                 if (!portfolio.hasOwnProperty(response.symbol)) {
-                    portfolio[response.symbol] = response.shares;
+                    portfolio[response.symbol] = {shares: response.shares};
+                    // Create string of symbols for a batch API request
+                    querySymbols += response.symbol + ','; 
                 } else {
-                    portfolio[response.symbol] += response.shares;
+                    portfolio[response.symbol].shares += response.shares;
                 }
             })
 
-            for (var stock in portfolio) {
-                if (portfolio.hasOwnProperty(stock)) {
-                    axios.get(`https://api.iextrading.com/1.0/stock/${stock}/quote`)
-                        .then(response => {
-                            const { latestPrice, open } = response.data;
-                            let stockStatus = open - latestPrice;
-                            if (stockStatus < open)
-                                stock.status = 'low'
-                            else if (stockStatus > open)
-                                stock.status = 'high'
-                            else
-                                stock.status = 'neutral'
+            querySymbols = querySymbols.slice(0, -1); // Remove the trailing ','
 
-                        }).catch(error => console.log(error))
-                }
-            }
-            return res.status(200).send(portfolio)
-        }).catch(error => res.status(401).send(error))
+            // Call the API with the batch of symbols and format the portfolio object
+             axios.get(`https://api.iextrading.com/1.0/stock/market/batch?symbols=${querySymbols}&types=quote`)
+                .then(response => {
+                    for (var stock in response.data) {
+                        if (portfolio.hasOwnProperty(stock)) {
+                            portfolio[stock].latestPrice = response.data[stock].quote.latestPrice;
+                            portfolio[stock].changePercent = response.data[stock].quote.changePercent;
+                        }
+                    }
+
+                    // Create an array from the portfolio object
+                    let portfolioList = [];
+                    for (var stock in portfolio) {
+                        const { shares, latestPrice, changePercent } = portfolio[stock];
+                        const stockData = {
+                            stock,
+                            shares,
+                            latestPrice,
+                            changePercent
+                        }
+                        portfolioList.push(stockData);
+                    }
+//                    console.log(portfolioList);
+
+//                    return res.status(200).send(portfolio);
+                        return res.status(200).send(portfolioList);
+                })  
+                .catch(res.status(400))
+        })
+        .catch(res.status(400))
 });
 
 

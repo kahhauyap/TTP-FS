@@ -6,11 +6,11 @@
 }
 
 .login-form {
-    width: 35%;
+    width: 45%;
     border: rgba(255, 255, 255, .8) .5px solid;
     margin: auto;
     padding: 30px 30px;
-    margin-top: 15%;
+    margin-top: 10%;
     background: rgba(0,0,0,.8);
     -webkit-box-shadow: 2px 0px 53px -16px rgba(0,0,0,1);
     -moz-box-shadow: 2px 0px 53px -16px rgba(0,0,0,1);
