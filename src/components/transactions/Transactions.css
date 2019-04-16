@@ -1,13 +1,21 @@
 .list {
     list-style: none;
-    overflow:hidden; 
-    overflow-y:scroll;
     margin:  auto;
     height: 100%;
-    border: 1px rgb(255, 255, 255) solid;
+    width: 100%;
     padding-inline-start: 0;
+
+
+    
+
 }
 
+.temp {
+
+    padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+    box-sizing: content-box; /* So the width will be 100% + 17px */
+    overflow: hidden;
+}
 .transaction {
     font-family: 'Roboto', sans-serif;
     font-size: 25px;
@@ -15,23 +23,48 @@
     width: 100%;
     text-align: center;
     color: white;
-    background: rgba(255, 255, 255, .0);
+    height: 90px;
+    text-shadow: 2px 2px 10px rgb(0, 0, 0);
 }
 
-.transaction:after {
+.transactions:after {
     content: ""; /* This is necessary for the pseudo element to work. */ 
     display: block; /* This will put the pseudo element on its own line. */
     margin: 0 auto; /* This will center the border. */
     width: 60%; /* Change this to whatever width you want. */
     padding-top: 20px; /* This creates some space between the element and the border. */
     border-bottom: 1px solid rgb(255, 255, 255); /* This creates the border. Replace black with whatever color you want. */
+
+}
+.transaction:hover {
+    height: 110px;
+    transition-duration: .3s;
+    -webkit-box-shadow: 3px -6px 45px -15px rgba(255,255,255,1);
+    -moz-box-shadow: 3px -6px 45px -15px rgba(255,255,255,1);
+    box-shadow: 3px -6px 45px -15px rgba(255,255,255,1);
 }
 
-.background {
+
+.back-drop {
+    width: 50%;
+    height: 700px;
+    margin-left: 15%;
+    margin-top: 5%;
+    float: left;
+}
+
+.backgrounds {
      height: 100vh;
      background: #000000;  /* fallback for old browsers */
      background: -webkit-linear-gradient(to bottom, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
      background: linear-gradient(to bottom, #e6e6e6, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+html, body {
+    background: #000000;  /* fallback for old browsers */
+    background-size: cover;
+    background: -webkit-linear-gradient(to left, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #e6e6e6, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .header {
@@ -40,13 +73,7 @@
     text-shadow: 2px 2px 10px rgb(0, 0, 0);
 }
 
-.back-drop {
-    background: rgba(255, 255, 255, .2);
-    width: 40%;
-    height: 700px;
-    margin-left: 15%;
-    margin-top: 5%;
-}
+
 
 .btn2 {
     background: #1abc9c !important;  /* fallback for old browsers */
@@ -80,4 +107,44 @@ h1 {
     margin-right: 20px;
     padding-right: 20px;
     border-right: white 2px solid;
+}
+
+.nav {
+    width: 100%;
+    height: 90px;
+    background: #000000;  /* fallback for old browsers */
+    background-size: cover;
+    background: -webkit-linear-gradient(to left, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #e6e6e6, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    position: fixed;
+    top:0;
+}
+
+.transaction-detail {
+    font-size: 50px;
+    right: 0;
+    position: fixed;
+    margin-top: 5%;
+  
+
+    float: right;
+    width: 35%;
+    height: 100%;
+
+}
+
+.grids {
+    float: left;
+    width: 100%;
+}
+
+.back-drop:after {
+    content: '';
+    display: block;
+    position: fixed;
+    bottom: 0;
+    width: 50%;
+    height: 40px;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
+    pointer-events: none;
 }

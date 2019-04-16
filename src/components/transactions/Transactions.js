@@ -7,7 +7,9 @@ class Transactions extends Component {
 
     state = {
         isLoading: false,
-        transactions: []
+        transactions: [],
+        symbol: 'AAPL',
+        shares: 1
     }
 
     componentDidMount() {
@@ -56,9 +58,15 @@ class Transactions extends Component {
 
     // Format the list of transactions pulling the details
     formatList = () => {
-        let transactions = this.state.transactions.map(transaction =>
-            <li className="transaction" key={transaction}>BUY ({transaction.symbol}) - {transaction.shares} Shares @ {transaction.price} </li>
-        )
+        let style;
+        let transactions = this.state.transactions.map((transaction, index) => {
+            if (index % 2 == 0)
+                style = { backgroundColor: "white", color: "black" };
+            else
+                style = { backgroundColor: "rgba(255,255,255,.2)" };
+
+            return <li className="transaction" key={index} style={style}>BUY ({transaction.symbol}) - {transaction.shares} Shares @ {transaction.price} </li>
+        })
         return transactions;
     }
 
@@ -70,17 +78,27 @@ class Transactions extends Component {
                     <div>Loading...</div>
                     :
                     <div className="background">
-                        <div>
+
+                        <div className="nav">   <div>
                             <h1 className="header">Transactions</h1>
                         </div>
-                        <div className="navigation">
-                            <a className="link portfolio-link" href="/portfolio" style={{ color: 'rgb(248, 248, 248)' }}>PORTFOLIO</a>
-                            <a className="link transaction-link" href="/transactions" style={{ fontSize: '21px' }}>TANSACTIONS</a>
+                            <div className="navigation">
+                                <a className="link portfolio-link" href="/portfolio" style={{ color: 'rgb(248, 248, 248)' }}>PORTFOLIO</a>
+                                <a className="link transaction-link" href="/transactions" style={{ fontSize: '21px' }}>TANSACTIONS</a>
+                            </div>
+                        </div>
+                        <div className="grid">
+                            <div className="transaction-detail">
+                                <div>
+                                    <h1>{this.state.symbol}</h1>
+                                    {this.state.shares}
+                                </div>
+                            </div>
+                            <div className="back-drop">
+                                <ul className="list">{transactions}</ul>
+                            </div>
                         </div>
 
-                        <div className="back-drop">
-                            <ul className="list">{transactions}</ul>
-                        </div>
                     </div>
                 }
             </div>
