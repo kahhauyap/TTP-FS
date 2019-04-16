@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import './Portfolio.css'
+import Store from '../store/Store';
 
 class Portfolio extends Component {
     state = {
@@ -158,32 +159,14 @@ class Portfolio extends Component {
 
                     </div>
 
-
                     <div className="left-container">
-                        <div className="stock-form">
-                            <h2 style={{ color: "white", textAlign: "center" }}>Balance:
-                                {this.state.isLoading ?
-                                    <span style={{ color: "white", textAlign: "center", float: "right", marginRight: "30%" }}>...</span>
-                                    :
-                                    <span style={{ color: "white", textAlign: "center", float: "right", marginRight: "30%" }}> {this.state.balance}</span>
-                                }</h2>
-                            <br></br>
-                            <Form.Group controlId="symbol">
-                                <Form.Label className="symbol-label">Symbol</Form.Label>
-                                <Form.Control type="symbol" placeholder="Symbol" onChange={this.handleInputChange} />
-                            </Form.Group>
-
-                            <Form.Group controlId="shares">
-                                <Form.Label className="symbol-label">Shares</Form.Label>
-                                <Form.Control type="shares" placeholder="Shares" onChange={this.handleInputChange} />
-                            </Form.Group>
-
-                            <Button className="buy-btn btn" variant="primary" onClick={this.buyStock}>
-                                Buy
-                            </Button>
-                            <br></br><br></br>
-                            <div className="alert-msg">{this.state.error} &nbsp;</div>
-                        </div>
+                        <Store
+                            balance={this.state.balance}
+                            handleInputChange={this.handleInputChange}
+                            buyStock={this.buyStock}
+                            loading={this.state.isLoading}
+                            error={this.state.error}>
+                        </Store>
                     </div>
                 </div>
 

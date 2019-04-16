@@ -11,19 +11,16 @@ class Login extends Component {
         password: '',
     }
 
+    // Update input
     handleInputChange = (event) => {
         this.setState({
             [event.target.id]: event.target.value
         })
     }
 
+    // Login POST request to database to validate user credentials
     onSubmit = (event) => {
         event.preventDefault();
-        const userData = {
-            email: this.state.email,
-            password: this.state.password
-        };
-
         axios.post('/users/login', {
             email: this.state.email,
             password: this.state.password
