@@ -38,7 +38,7 @@ class Register extends Component {
             <div className="Login">
                 <h1 className="title">TTP Stock</h1>
                 <div className="login-form">
-                    <h1>Register</h1>
+                    <h1 className="register-header">Register</h1>
                     <Form>
                         <Form.Group controlId="name">
                             <Form.Label>Name</Form.Label>
@@ -46,7 +46,7 @@ class Register extends Component {
                         </Form.Group>
 
                         <Form.Group controlId="email">
-                            <Form.Label>Email address</Form.Label>
+                            <Form.Label>Email</Form.Label>
                             <Form.Control type="email" placeholder="Email" onChange={this.handleInputChange} />
                         </Form.Group>
 

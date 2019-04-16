@@ -65,22 +65,25 @@ class Transactions extends Component {
     render() {
         let transactions = this.formatList();
         return (
-            this.state.isLoading ?
-                <div>Loading...</div>
-                :
-                <div className="background">
-                    <div>
-                        <h1 className="header">Transactions</h1>
-                    </div>
-                    <div className="navigation">
-                        <Button className="portfolio-btn btn" variant="primary" onClick={this.redirectPortfolio}>Portfolio</Button>
-                        <Button className="transaction-btn btn transaction-page" variant="primary" onClick={this.redirectTransactions}>Transactions</Button>
-                    </div>
+            <div>
+                {this.state.isLoading ?
+                    <div>Loading...</div>
+                    :
+                    <div className="background">
+                        <div>
+                            <h1 className="header">Transactions</h1>
+                        </div>
+                        <div className="navigation">
+                            <a className="link portfolio-link" href="/portfolio" style={{ color: 'rgb(248, 248, 248)' }}>PORTFOLIO</a>
+                            <a className="link transaction-link" href="/transactions" style={{ fontSize: '21px' }}>TANSACTIONS</a>
+                        </div>
 
-                    <div className="back-drop">
-                        <ul className="list">{transactions}</ul>
+                        <div className="back-drop">
+                            <ul className="list">{transactions}</ul>
+                        </div>
                     </div>
-                </div >
+                }
+            </div>
         );
     }
 }

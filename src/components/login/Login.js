@@ -36,10 +36,10 @@ class Login extends Component {
             <div className="Login">
                 <h1 className="title">TTP Stock</h1>
                 <div className="login-form">
-                    <h1>Login</h1>
+                    <h1 className="login-header">Login</h1>
                     <Form>
                         <Form.Group controlId="email">
-                            <Form.Label>Email address</Form.Label>
+                            <Form.Label>Email</Form.Label>
                             <Form.Control type="email" placeholder="Email" onChange={this.handleInputChange} />
                         </Form.Group>
 

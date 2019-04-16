@@ -128,18 +128,15 @@ class Portfolio extends Component {
     }
 
     render() {
-        let stocks = this.mapPortfolio();
-
         return (
-
             <div className="background">
                 <div className="greetings">
-                    <h1>Welcome {this.state.user}</h1>
+                    <h1 className="header">Welcome {this.state.user}</h1>
                 </div>
 
                 <div className="navigation">
-                    <Button className="portfolio-btn btn" variant="primary" onClick={this.redirectPortfolio}>Portfolio</Button>
-                    <Button className="transaction-btn btn" variant="primary" onClick={this.redirectTransactions}>Transactions</Button>
+                    <a className="link portfolio-link" href="/portfolio" style={{ fontSize: '21px' }}>PORTFOLIO</a>
+                    <a className="link transaction-link" href="/transactions" style={{ color: 'rgb(248, 248, 248)' }}>TANSACTIONS</a>
                 </div>
 
                 <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>logout</Button>
