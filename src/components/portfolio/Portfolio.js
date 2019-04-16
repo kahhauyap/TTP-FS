@@ -105,27 +105,6 @@ class Portfolio extends Component {
         })
     }
 
-    // Map the portfolio array to a list
-    mapPortfolio = () => {
-        let stocks = this.state.portfolio.map(stock => {
-            let totalPrice = (Math.floor((stock.latestPrice * stock.shares) * 100) / 100);
-            let style;
-            if (stock.changePercent === 0)
-                style = { color: "grey" };
-            else if (stock.changePercent > 0)
-                style = { color: "green" }
-            else
-                style = { color: "red" }
-
-            return (
-                <li className="portfolio-stock" key={stock.stock} style={style}>
-                    {stock.stock} - {stock.shares} Shares ${totalPrice} {stock.changePercent}%
-                </li>
-            );
-        })
-        return stocks;
-    }
-
     render() {
         return (
             <div className="background">
@@ -139,10 +118,10 @@ class Portfolio extends Component {
                 </div>
 
                 <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>logout</Button>
-
+                <Stocks portfolio={this.state.portfolio} isLoading={this.state.isLoading} ></Stocks>
                 <div className="container">
                     <div className="right-container">
-                        <Stocks portfolio={this.state.portfolio} isLoading={this.state.isLoading} ></Stocks>
+
                     </div>
 
                     <div className="left-container">

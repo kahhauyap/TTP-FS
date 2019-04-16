@@ -16,6 +16,43 @@
 .loading {
     margin: auto;
 }
+
 .placeholder {
     height: 450px;
+}
+
+.portfolio-stock {
+    background-color: rgba(255,255,255,.2);
+}
+
+.portfolio-symbol {
+    font-size: 30px;
+}
+
+.portfolio-change {
+    background: black;
+    border-radius: 10px;
+    font-size: 18px;
+    margin-right: 10%;
+    padding: 6px 6px;
+    float: right;
+}
+
+.portfolio-info {
+    float: left;
+    margin-left: 20%;
+}
+
+.portfolio-shares {
+    margin-left: 40px;
+}
+
+.tab-space {
+    margin-left: 50px;
+}
+
+.portfolio-price {
+    float: right;
+    margin-right: 3%;
+
 }
