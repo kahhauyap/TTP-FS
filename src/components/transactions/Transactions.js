@@ -39,8 +39,6 @@ class Transactions extends Component {
             .catch(error => console.log(error));
     }
 
-
-
     // Format the transactions into a list to display
     formatTransactions = (transactions) => {
         let transactionList = [];
@@ -75,12 +73,8 @@ class Transactions extends Component {
                         <h1 className="header">Transactions</h1>
                     </div>
                     <div className="navigation">
-                        <Button className="portfolio-btn btn" variant="primary" onClick={this.redirectPortfolio}>
-                            Portfolio
-                    </Button>
-                        <Button className="transaction-btn btn" variant="primary" onClick={this.redirectTransactions}>
-                            Transactions
-                    </Button>
+                        <Button className="portfolio-btn btn" variant="primary" onClick={this.redirectPortfolio}>Portfolio</Button>
+                        <Button className="transaction-btn btn transaction-page" variant="primary" onClick={this.redirectTransactions}>Transactions</Button>
                     </div>
 
                     <div className="back-drop">

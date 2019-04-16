@@ -31,8 +31,6 @@
     margin: 2em;
 }
 
-
-
 .container {
     display: flex;
     width: 100%;
@@ -43,14 +41,4 @@
 }
 .right-container {
     flex: 50%;
-}
-
-.portfolio-list {
-    list-style: none;
-    color: white;
-    font-size: 30px;
-    margin-top: 20%;
-    margin-right: 5%;
-    text-align: center;
-    background: rgba(66, 120, 170, 0.5);
 }

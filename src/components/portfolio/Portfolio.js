@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import './Portfolio.css'
 import Store from '../store/Store';
+import Stocks from '../stocks/Stocks';
 
 class Portfolio extends Component {
     state = {
@@ -137,35 +138,24 @@ class Portfolio extends Component {
                 </div>
 
                 <div className="navigation">
-                    <Button className="portfolio-btn btn" variant="primary" onClick={this.redirectPortfolio}>
-                        Portfolio
-                        </Button>
-                    <Button className="transaction-btn btn" variant="primary" onClick={this.redirectTransactions}>
-                        Transactions
-                     </Button>
+                    <Button className="portfolio-btn btn" variant="primary" onClick={this.redirectPortfolio}>Portfolio</Button>
+                    <Button className="transaction-btn btn" variant="primary" onClick={this.redirectTransactions}>Transactions</Button>
                 </div>
 
-                <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>
-                    Logout
-                    </Button>
+                <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>logout</Button>
 
                 <div className="container">
                     <div className="right-container">
-                        {this.state.isLoading ?
-                            <div>Loading...</div>
-                            :
-                            <ul className="portfolio-list">{stocks}</ul>
-                        }
-
+                        <Stocks portfolio={this.state.portfolio} isLoading={this.state.isLoading} ></Stocks>
                     </div>
 
                     <div className="left-container">
                         <Store
                             balance={this.state.balance}
+                            error={this.state.error}
                             handleInputChange={this.handleInputChange}
-                            buyStock={this.buyStock}
                             loading={this.state.isLoading}
-                            error={this.state.error}>
+                            buyStock={this.buyStock}>
                         </Store>
                     </div>
                 </div>
