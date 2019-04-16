@@ -38,7 +38,7 @@ class Transactions extends Component {
                     transactions: transactionList,
                     isLoading: false,
                 });
-                // Component was not being properly rendered in single call to set state
+                // Set default details to the first transaction
                 this.setState({
                     symbol: this.state.transactions[0].symbol,
                     shares: this.state.transactions[0].shares,
@@ -82,26 +82,24 @@ class Transactions extends Component {
         let style;
         let transactions = this.state.transactions.map((transaction, index) => {
             if (index % 2 !== 0)
-                style = { backgroundColor: "white", color: "black" };
+                style = { backgroundColor: "rgba(255,255,255,.2)" };
             else
                 style = { backgroundColor: "rgba(255,255,255,.2)" };
 
-            return <li className="transaction" key={index} style={style} onClick={this.onClick.bind(this, index)}>BUY ({transaction.symbol}) - {transaction.shares} Shares @ {transaction.price} </li>
+            return (<li className="transaction" key={index} style={style} onClick={this.onClick.bind(this, index)}>
+                BUY ( <span className="transaction-symbol">  {transaction.symbol} </span>)
+                - {transaction.shares} Shares @<span className="transaction-price"> ${transaction.price}</span>
+            </li>)
         })
         return transactions;
     }
 
+    // Format date into Month, Day, Year
     formatDate = (date) => {
-        var monthNames = [
-            "January", "February", "March",
-            "April", "May", "June", "July",
-            "August", "September", "October",
-            "November", "December"
-        ];
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let year = date.substring(0, 4);
         let month = date.substring(5, 7);
         let day = date.substring(8, 10);
-
         let newDate = monthNames[parseInt(month) - 1] + " " + day + ", " + year;
         return newDate;
     }
@@ -115,9 +113,10 @@ class Transactions extends Component {
                     :
                     <div className="background">
 
-                        <div className="nav">   <div>
-                            <h1 className="header">Transactions</h1>
-                        </div>
+                        <div className="nav">
+                            <div>
+                                <h1 className="header">Transactions</h1>
+                            </div>
                             <div className="navigation">
                                 <a className="link portfolio-link" href="/portfolio" style={{ color: 'rgb(248, 248, 248)' }}>PORTFOLIO</a>
                                 <a className="link transaction-link" href="/transactions" style={{ fontSize: '21px' }}>TRANSACTIONS</a>
@@ -128,8 +127,8 @@ class Transactions extends Component {
                                 <div>
                                     <h1 className="symbol-detail">{this.state.symbol}</h1>
                                     <hr></hr>
-                                    <h2>{this.state.shares} SHARE(S) - ${this.state.price}</h2>
-                                    <h2>TOTAL - ${this.state.price * this.state.shares}</h2>
+                                    <h2>{this.state.shares} SHARES - <span class="money">${this.state.price}</span></h2>
+                                    <h2>TOTAL - <span class="money">${this.state.price * this.state.shares}</span></h2>
                                     <h3>PURCHASED - {this.state.date} </h3>
                                 </div>
                             </div>

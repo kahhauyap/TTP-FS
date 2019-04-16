@@ -135,7 +135,7 @@ class Portfolio extends Component {
 
                 <div className="navigation">
                     <a className="link portfolio-link" href="/portfolio" style={{ fontSize: '21px' }}>PORTFOLIO</a>
-                    <a className="link transaction-link" href="/transactions" style={{ color: 'rgb(248, 248, 248)' }}>TANSACTIONS</a>
+                    <a className="link transaction-link" href="/transactions" style={{ color: 'rgb(248, 248, 248)' }}>TRANSACTIONS</a>
                 </div>
 
                 <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>logout</Button>
