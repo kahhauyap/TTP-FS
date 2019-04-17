@@ -14,6 +14,7 @@ class Portfolio extends Component {
         shares: 0,
         isLoading: true,
         error: '',
+        total: null,
     }
 
     componentDidMount() {
@@ -69,7 +70,7 @@ class Portfolio extends Component {
             .then(response => {
                 console.log(response.data)
                 this.getPortfolio();
-                this.setState({ balance: response.data.balance, error: `Purchased ${this.state.shares} ${symbol} share(s)` });
+                this.setState({ balance: response.data.balance, error: `Purchased ${this.state.shares} ${symbol} Share(s)` });
             })
             .catch(error => {
                 if (error.response) {
@@ -87,11 +88,15 @@ class Portfolio extends Component {
         axios.get("/api/portfolio")
             .then(response => {
                 console.log(response.data)
+                let total = 0;
+                response.data.forEach(stock => {
+                    total += (stock.latestPrice * stock.shares);
+                })
                 this.setState({
                     portfolio: response.data,
+                    total,
                     isLoading: false
                 });
-                console.log(this.state.portfolio)
             })
             .catch(error => {
                 console.log(error);
@@ -108,23 +113,17 @@ class Portfolio extends Component {
     render() {
         return (
             <div className="background">
-                <div className="greetings">
-                    <h1 className="header">Welcome {this.state.user}</h1>
-                </div>
-
-                <div className="navigation">
-                    <a className="link portfolio-link" href="/portfolio" style={{ fontSize: '21px' }}>PORTFOLIO</a>
-                    <a className="link transaction-link" href="/transactions" style={{ color: 'rgb(248, 248, 248)' }}>TRANSACTIONS</a>
-                </div>
-
-                <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>logout</Button>
-                <Stocks portfolio={this.state.portfolio} isLoading={this.state.isLoading} ></Stocks>
-                <div className="container">
-                    <div className="right-container">
-
+                <div className="nav">
+                    <div className="greetings">
+                        <h1 className="header">Portfolio ( <span className="portfolio-balance">${this.state.total}</span> )</h1>
                     </div>
-
-                    <div className="left-container">
+                    <div className="navigation">
+                        <a className="link portfolio-link" href="/portfolio" style={{ fontSize: '21px' }}>PORTFOLIO</a>
+                        <a className="link transaction-link" href="/transactions" style={{ color: 'rgb(248, 248, 248)' }}>TRANSACTIONS</a>
+                    </div>
+                </div>
+                <div className="store transaction-detail">
+                    <div>
                         <Store
                             balance={this.state.balance}
                             error={this.state.error}
@@ -134,7 +133,9 @@ class Portfolio extends Component {
                         </Store>
                     </div>
                 </div>
-
+                <Stocks portfolio={this.state.portfolio} isLoading={this.state.isLoading} ></Stocks>
+                <button className="logout-btn btn" onClick={this.logoutUser}>logout</button>
+                <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>logout</Button>
             </div>
         );
     }

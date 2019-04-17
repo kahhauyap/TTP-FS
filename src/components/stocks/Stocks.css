@@ -9,8 +9,8 @@
 }
 
 .spinner-border {
-    margin-left: 250px;
-    margin-top: 250px;
+    margin-left: 500px;
+    margin-top: 400px;
 }
 
 .loading {
@@ -19,10 +19,6 @@
 
 .placeholder {
     height: 450px;
-}
-
-.portfolio-stock {
-    background-color: rgba(255,255,255,.2);
 }
 
 .portfolio-symbol {

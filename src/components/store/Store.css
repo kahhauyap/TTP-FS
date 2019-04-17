@@ -1,27 +1,62 @@
 .buy-btn {
-    width: 100%;
+    width: 93%;
     margin-top: 15px;
-    background: rgba(255, 255, 255, 0) !important;
+    margin-left: 4%;
+    background: rgba(255, 255, 255) !important;
+    color: #495057 !important;
+
+    font-size: 20px !important;
 }
 
 .buy-btn:hover {
-    background: rgba(58, 58, 58, .8) !important;
+    background: rgba(243, 243, 243, 0.8) !important;
 }
 
-.symbol-label s {
-    color: black !important;
+.symbol-label {
+    font-size: 30px;
 }
 
 .stock-form {
-    margin: auto;
-    width: 500px;
-    padding: 20px 20px;
-    border: rgba(255, 255, 255, .8) .5px solid;
+    box-sizing: none;
+    margin-right: 10% !important;
+    width: 600px;
     padding: 30px 30px;
-    margin-top: 15%;
-    background: rgba(0,0,0,.8);
 }
 
 .alert-msg {
     color: white;
+    font-size: 25px;
+    text-align: center;
+}
+
+.store {
+    margin-right: 3%;
+}
+
+.store-cash {
+    color: rgb(92, 255, 141);
+    text-align: center; 
+}
+
+.store-balance {
+    color: white;
+    text-align: left;
+    margin-left: 5%;
+    text-shadow: 2px 2px 10px rgb(0, 0, 0);
+}
+
+
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 1) { 
+    .stock-form {
+        width: 500px;
+    }
+    .store {
+        margin-right: 5%;
+    }
+    .store-balance {
+        margin-left: 8%;
+    }
 }

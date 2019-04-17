@@ -15,12 +15,19 @@
 }
 
 .logout-btn {
+    bottom: 0;
+    right: 0;
+    position: fixed;
     margin-left: 2%;
     margin-top: 1%;
+    background: rgb(58, 58, 58) !important;
+    opacity: 0;
 }
 
 .logout-btn:hover {
     background: rgb(58, 58, 58) !important;
+    transition-duration: 2s;
+    opacity: 1;
 }
 
 .navigation {
@@ -40,5 +47,9 @@
 }
 .right-container {
     flex: 50%;
+}
+
+.portfolio-balance {
+    color: rgb(92, 255, 141);
 }
 

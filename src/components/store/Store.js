@@ -1,4 +1,3 @@
-// Presentational component for purchasing stocks
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -6,15 +5,11 @@ import './Store.css'
 
 const Store = (props) => {
     return (
-        <div>
+        <div className="store">
+            <h2 className="store-balance">
+                Balance: <span className="store-cash">${props.balance}</span>
+            </h2>
             <div className="stock-form">
-                <h2 style={{ color: "white", textAlign: "center" }}> Balance:
-                                {props.isLoading ?
-                        <span style={{ color: "white", textAlign: "center", float: "right", marginRight: "30%" }}>...</span>
-                        :
-                        <span style={{ color: "white", textAlign: "center", float: "right", marginRight: "30%" }}> {props.balance}</span>
-                    }</h2>
-                <br></br>
                 <Form.Group controlId="symbol">
                     <Form.Label className="symbol-label">Symbol</Form.Label>
                     <Form.Control type="symbol" placeholder="Ticker" onChange={props.handleInputChange} />
@@ -30,7 +25,7 @@ const Store = (props) => {
                 </Button>
 
 
-                <div className="alert-msg" style={{ marginTop: "8%" }}>{props.error} &nbsp;</div>
+                <div id="hideMe" className="alert-msg" style={{ marginTop: "8%" }}>{props.error} &nbsp;</div>
             </div>
         </div >
     );

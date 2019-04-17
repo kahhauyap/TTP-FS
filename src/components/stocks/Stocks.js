@@ -9,15 +9,14 @@ class Stocks extends Component {
             let totalPrice = (Math.floor((stock.latestPrice * stock.shares) * 100) / 100);
             let style;
             let changeStyle;
+            // Dynamically style stock information based on performance
             if (stock.changePercent === 0) {
                 style = { color: "rgb(194, 194, 194)" };
                 changeStyle = { backgroundColor: "rgb(194, 194, 194)" }
-            }
-            else if (stock.changePercent > 0) {
+            } else if (stock.changePercent > 0) {
                 style = { color: "rgb(92, 255, 141)" }
                 changeStyle = { backgroundColor: "rgb(96, 221, 96)" }
-            }
-            else {
+            } else {
                 style = { color: "rgb(221, 111, 96)" }
                 changeStyle = { backgroundColor: "rgb(221, 111, 96)" }
             }
@@ -33,8 +32,6 @@ class Stocks extends Component {
                     </span>
                     <span className="portfolio-change" style={changeStyle}>{stock.changePercent}% </span>
                     <span style={style} className="portfolio-price"> ${totalPrice} </span>
-
-
                 </li>
             );
         })
@@ -46,19 +43,17 @@ class Stocks extends Component {
 
         return (
             <div>
-                {this.props.isLoading ?
-                    <div className="spinner-border" role="status">
-                        <span className="sr-only">Loading...</span>
-                    </div>
-                    :
-                    <div className="back-drop">
+
+                <div className="back-drop">
+                    {this.props.isLoading ?
+                        <div className="spinner-border text-light" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </div>
+                        :
                         <ul className="list">{stocks}</ul>
-                    </div>
+                    }
+                </div>
 
-
-
-
-                }
             </div>
         )
     }

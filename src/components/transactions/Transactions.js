@@ -36,14 +36,14 @@ class Transactions extends Component {
                 let transactionList = this.formatTransactions(response.data);
                 this.setState({
                     transactions: transactionList,
-                    isLoading: false,
                 });
                 // Set default details to the first transaction
                 this.setState({
                     symbol: this.state.transactions[0].symbol,
                     shares: this.state.transactions[0].shares,
                     date: this.state.transactions[0].date,
-                    price: this.state.transactions[0].price
+                    price: this.state.transactions[0].price,
+                    isLoading: false
                 });
             })
             .catch(error => console.log(error));
@@ -81,12 +81,7 @@ class Transactions extends Component {
     formatList = () => {
         let style;
         let transactions = this.state.transactions.map((transaction, index) => {
-            if (index % 2 !== 0)
-                style = { backgroundColor: "rgba(255,255,255,.2)" };
-            else
-                style = { backgroundColor: "rgba(255,255,255,.2)" };
-
-            return (<li className="transaction" key={index} style={style} onClick={this.onClick.bind(this, index)}>
+            return (<li className="transaction" key={index} onClick={this.onClick.bind(this, index)}>
                 BUY ( <span className="transaction-symbol">  {transaction.symbol} </span>)
                 - {transaction.shares} Shares @<span className="transaction-price"> ${transaction.price}</span>
             </li>)
@@ -108,8 +103,10 @@ class Transactions extends Component {
         let transactions = this.formatList();
         return (
             <div>
-                {this.state.isLoading ?
-                    <div>Loading...</div>
+                {this.props.isLoading ?
+                    <div className="spinner-border text-light" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
                     :
                     <div className="background">
 
@@ -123,11 +120,11 @@ class Transactions extends Component {
                             </div>
                         </div>
                         <div className="grid">
-                            <div className="transaction-detail">
+                            <div className="transaction-detail trans">
                                 <div>
                                     <h1 className="symbol-detail">{this.state.symbol}</h1>
                                     <hr></hr>
-                                    <h2>{this.state.shares} SHARES - <span class="money">${this.state.price}</span></h2>
+                                    <h2>{this.state.shares} SHARES - <span className="money">${this.state.price}</span></h2>
                                     <h2>TOTAL - <span class="money">${this.state.price * this.state.shares}</span></h2>
                                     <h3>PURCHASED - {this.state.date} </h3>
                                 </div>
