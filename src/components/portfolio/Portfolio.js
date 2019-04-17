@@ -14,7 +14,7 @@ class Portfolio extends Component {
         shares: 0,
         isLoading: true,
         error: '',
-        total: null,
+        total: 0,
     }
 
     componentDidMount() {
@@ -26,7 +26,6 @@ class Portfolio extends Component {
     authenticateUser = () => {
         axios.get('/users/auth')
             .then(response => {
-                console.log(response);
                 this.setState({
                     user: response.data.user,
                     balance: response.data.balance
@@ -34,7 +33,6 @@ class Portfolio extends Component {
             })
             .catch(error => {
                 if (error.response) {
-                    console.log(error.response);
                     const { history } = this.props;
                     history.push('/');
                 }
@@ -68,7 +66,6 @@ class Portfolio extends Component {
         let symbol = this.state.symbol.toUpperCase();
         axios.get(`/api/fetch/${symbol}/${this.state.shares}`)
             .then(response => {
-                console.log(response.data)
                 this.getPortfolio();
                 this.setState({ balance: response.data.balance, error: `Purchased ${this.state.shares} ${symbol} Share(s)` });
             })
@@ -87,7 +84,6 @@ class Portfolio extends Component {
     getPortfolio = () => {
         axios.get("/api/portfolio")
             .then(response => {
-                console.log(response.data)
                 let total = 0;
                 response.data.forEach(stock => {
                     total += (stock.latestPrice * stock.shares);
@@ -100,6 +96,7 @@ class Portfolio extends Component {
             })
             .catch(error => {
                 console.log(error);
+                this.setState({ isLoading: false })
             });
     }
 

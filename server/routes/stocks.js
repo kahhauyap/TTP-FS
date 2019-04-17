@@ -70,7 +70,7 @@ router.post("/transactions", (req, res) => {
     })
     newTransaction
         .save()
-        .then(transaction => res.json(transaction))
+        .then(transaction => res.send(transaction))
         .catch(err => console.log(err));
 
     return res.status(200).send(newTransaction);
@@ -101,6 +101,8 @@ router.get("/portfolio", (req, res) => {
     // Fetch all transactions from a user
     axios.get(`http://localhost:4000/api/transactions/${req.session.user}`)
         .then(response => {
+            if (response.data.length === 0)
+                return res.status(404).send("No transactions");
             let portfolio = {};
             let querySymbols = '';
             // Create a portfolio object with the symbols as the properties and set the number of shares
@@ -140,9 +142,12 @@ router.get("/portfolio", (req, res) => {
                     }
                     return res.status(200).send(portfolioList);
                 })
-                .catch(res.status(400))
+                .catch(error => {
+                    console.log(error.response)
+                    return res.status(400).send(error)
+                })
         })
-        .catch(res.status(400))
+        .catch(error => { return res.status(400).send(error) })
 });
 
 

@@ -22,6 +22,7 @@ class Login extends Component {
     // Login POST request to database to validate user credentials
     onSubmit = (event) => {
         event.preventDefault();
+
         axios.post('/users/login', {
             email: this.state.email,
             password: this.state.password
@@ -44,6 +45,7 @@ class Login extends Component {
                 <h1 className="title">TTP Stock</h1>
                 <div className="login-form">
                     <h1 className="login-header">Login</h1>
+
                     <Form>
                         <Form.Group controlId="email">
                             <Form.Label>Email</Form.Label>

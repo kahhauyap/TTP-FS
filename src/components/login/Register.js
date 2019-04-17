@@ -22,19 +22,30 @@ class Register extends Component {
     // Register user then redirect to login page
     onSubmit = (event) => {
         event.preventDefault();
+        if (!this.validateEmail(this.state.email)) {
+            this.setState({ error: "Not a valid email" })
+            return;
+        }
         axios.post('/users/register', {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password
         })
             .then(() => {
+                this.setState({ error: "User registered" })
                 const { history } = this.props;
                 history.push('/');
             }).catch(error => {
-                console.log(error.response)
                 if (error.response.status === 400)
                     this.setState({ error: "Email already in use" })
             });
+    }
+
+    // Validate email
+    validateEmail = (email) => {
+        if (!email.includes(".com") || !email.includes("@") || email.length < 5)
+            return false;
+        return true;
     }
 
     render() {

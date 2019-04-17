@@ -10,7 +10,7 @@ class Transactions extends Component {
         symbol: '',
         shares: null,
         date: null,
-        price: null
+        price: 0
     }
 
     componentDidMount() {
@@ -33,6 +33,7 @@ class Transactions extends Component {
     getTransactions = () => {
         axios.get(`/api/transactions`)
             .then(response => {
+                if (!response.data) this.setState({ isLoading: false })
                 let transactionList = this.formatTransactions(response.data);
                 this.setState({
                     transactions: transactionList,
@@ -124,7 +125,7 @@ class Transactions extends Component {
                                     <h1 className="symbol-detail">{this.state.symbol}</h1>
                                     <hr></hr>
                                     <h2>{this.state.shares} SHARES - <span className="money">${this.state.price}</span></h2>
-                                    <h2>TOTAL - <span class="money">${this.state.price * this.state.shares}</span></h2>
+                                    <h2>TOTAL - <span className="money">${this.state.price * this.state.shares}</span></h2>
                                     <h3>PURCHASED - {this.state.date} </h3>
                                 </div>
                             </div>
