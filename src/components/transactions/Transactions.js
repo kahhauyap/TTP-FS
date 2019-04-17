@@ -79,7 +79,6 @@ class Transactions extends Component {
 
     // Format the list of transactions pulling the details
     formatList = () => {
-        let style;
         let transactions = this.state.transactions.map((transaction, index) => {
             return (<li className="transaction" key={index} onClick={this.onClick.bind(this, index)}>
                 BUY ( <span className="transaction-symbol">  {transaction.symbol} </span>)

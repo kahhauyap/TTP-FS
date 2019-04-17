@@ -5,12 +5,12 @@ import Form from 'react-bootstrap/Form';
 import { withRouter } from "react-router";
 import './Login.css'
 
-
 class Register extends Component {
     state = {
         email: '',
         name: '',
         password: '',
+        error: ''
     }
 
     handleInputChange = (event) => {
@@ -30,7 +30,11 @@ class Register extends Component {
             .then(() => {
                 const { history } = this.props;
                 history.push('/');
-            }).catch(err => console.log(err));
+            }).catch(error => {
+                console.log(error.response)
+                if (error.response.status === 400)
+                    this.setState({ error: "Email already in use" })
+            });
     }
 
     render() {
@@ -55,10 +59,11 @@ class Register extends Component {
                             <Form.Control type="password" placeholder="Password" onChange={this.handleInputChange} />
                         </Form.Group>
 
-                        <Button className="login-btn" variant="primary" type="submit" onClick={this.onSubmit}>
+                        <Button className="login-btn register-btn" variant="primary" type="submit" onClick={this.onSubmit}>
                             Sign up
                         </Button>
                     </Form>
+                    <div className="alert-msg login-alert" style={{ marginTop: "1%" }}>{this.state.error} &nbsp;</div>
                 </div>
             </div>
         );

@@ -70,7 +70,7 @@ router.post("/login", (req, res) => {
                 req.session.balance = user.balance;
 
             } else { // Password didn't match so send error
-                return res.status(400).json({ passwordincorrect: "Password incorrect" });
+                return res.status(400).send("Password didn't match!")
             }
         });
     });

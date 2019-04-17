@@ -9,6 +9,7 @@ class Login extends Component {
     state = {
         email: '',
         password: '',
+        error: ''
     }
 
     // Update input
@@ -28,7 +29,13 @@ class Login extends Component {
             .then(() => {
                 const { history } = this.props;
                 history.push('/portfolio');
-            }).catch(err => console.log(err));
+            }).catch(error => {
+                console.log(error.response)
+                if (error.response.status === 404)
+                    this.setState({ error: "User was not found" })
+                else if (error.response.status === 400)
+                    this.setState({ error: "Incorrect password" })
+            });
     }
 
     render() {
@@ -47,17 +54,20 @@ class Login extends Component {
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" placeholder="Password" onChange={this.handleInputChange} />
                         </Form.Group>
+                        <div className="button-set">
+                            <Button className="login-btn" variant="primary" type="submit" onClick={this.onSubmit}>
+                                Login
+                            </Button>
 
-                        <Button className="login-btn" variant="primary" type="submit" onClick={this.onSubmit}>
-                            Login
-                        </Button>
+                            <Link to="/register">
+                                <Button className="login-btn" variant="primary">
+                                    Register
+                            </Button>
 
-                        <Link to="/register">
-                            <Button className="login-btn" variant="primary">
-                                Register
-                        </Button>
-                        </Link>
+                            </Link>
+                        </div>
                     </Form>
+                    <div className="alert-msg login-alert" style={{ marginTop: "1%" }}>{this.state.error} &nbsp;</div>
                 </div>
             </div>
         );

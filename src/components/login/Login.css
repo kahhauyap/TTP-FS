@@ -29,6 +29,10 @@ label {
     margin-top: 1%;
 }
 
+.register-btn {
+    margin-left: 4% !important;
+}
+
 .login-btn:hover {
     background: rgb(58, 58, 58) !important;
 }
@@ -52,3 +56,14 @@ h1 {
 .login-header, .register-header {
     margin-bottom: 3%;
 }
+
+.login-alert{
+    font-family: 'Oswald',sans-serif; 
+    font-size: 20px !important;
+    margin-top: 0;
+}
+
+.button-set{
+    margin-left: 2%;
+}
+

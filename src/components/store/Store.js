@@ -24,10 +24,9 @@ const Store = (props) => {
                     Buy
                 </Button>
 
-
-                <div id="hideMe" className="alert-msg" style={{ marginTop: "8%" }}>{props.error} &nbsp;</div>
+                <div className="alert-msg" style={{ marginTop: "8%" }}>{props.error} &nbsp;</div>
             </div>
-        </div >
+        </div>
     );
 }
 
