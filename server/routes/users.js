@@ -25,7 +25,6 @@ router.post("/register", (req, res) => {
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
                 if (err) {
-                    console.log(err)
                     throw err;
                 }
                 newUser.password = hash;
@@ -107,7 +106,6 @@ router.get("/balance", (req, res, next) => {
         if (!user) {
             return res.status(400).send("User doesn't exist");
         }
-        console.log(user.balance);
         return res.status(200).send(user);
     })
 });

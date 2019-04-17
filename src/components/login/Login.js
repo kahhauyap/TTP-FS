@@ -31,7 +31,6 @@ class Login extends Component {
                 const { history } = this.props;
                 history.push('/portfolio');
             }).catch(error => {
-                console.log(error.response)
                 if (error.response.status === 404)
                     this.setState({ error: "User was not found" })
                 else if (error.response.status === 400)

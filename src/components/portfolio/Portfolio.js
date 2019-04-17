@@ -88,6 +88,7 @@ class Portfolio extends Component {
                 response.data.forEach(stock => {
                     total += (stock.latestPrice * stock.shares);
                 })
+                total = (Math.floor((total) * 100) / 100);
                 this.setState({
                     portfolio: response.data,
                     total,
@@ -95,7 +96,6 @@ class Portfolio extends Component {
                 });
             })
             .catch(error => {
-                console.log(error);
                 this.setState({ isLoading: false })
             });
     }

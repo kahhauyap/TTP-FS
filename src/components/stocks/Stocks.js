@@ -2,15 +2,6 @@ import React, { Component } from 'react';
 import './Stocks.css'
 
 class Stocks extends Component {
-    state = {
-        portfolio: [],
-        isLoading: true
-    }
-
-    componentWillReceiveProps(newProps) {
-        console.log(newProps)
-        this.setState({ portfolio: newProps.portfolio, isLoading: newProps.isLoading });
-    }
 
     // Map the portfolio array to a list
     mapPortfolio = () => {
@@ -54,7 +45,7 @@ class Stocks extends Component {
             <div>
 
                 <div className="back-drop">
-                    {this.state.isLoading ?
+                    {this.props.isLoading ?
                         <div className="spinner-border text-light" role="status">
                             <span className="sr-only">Loading...</span>
                         </div>

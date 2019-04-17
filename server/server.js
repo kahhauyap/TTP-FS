@@ -13,8 +13,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-
-
 // mLab MongoDB database
 const mongoDB = 'mongodb://mongodb:password1@ds125673.mlab.com:25673/stocks';
 

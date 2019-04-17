@@ -46,7 +46,6 @@ router.get("/fetch/:symbol/:shares", (req, res, next) => {
 // Get the user's balance
 router.get("/balance", (req, res, next) => {
     if (!req.session.user) {
-        console.log("not logged in")
         return res.status(401).send();
     }
 
@@ -143,7 +142,6 @@ router.get("/portfolio", (req, res) => {
                     return res.status(200).send(portfolioList);
                 })
                 .catch(error => {
-                    console.log(error.response)
                     return res.status(400).send(error)
                 })
         })
