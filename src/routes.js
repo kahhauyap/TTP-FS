@@ -16,7 +16,7 @@ const Routes = () => (
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/" component={LoginApp} store={store} />
+                <Route exact path="/" component={LoginApp} />
                 <Route path="/register" component={Register} />
                 <Route path="/portfolio" component={Portfolio} />
                 <Route path="/transactions" component={Transactions} />

@@ -24,14 +24,13 @@ class Login extends Component {
         */
     }
 
+    // Dispatch actions to update user info
     handleEmailChange = (event) => {
-        this.props.updateUser(event.target.value)
-        console.log(store.getState())
+        this.props.updateEmail(event.target.value)
     }
 
     handlePasswordChange = (event) => {
         this.props.updatePassword(event.target.value)
-        console.log(store.getState())
     }
 
     // Login POST request to database to validate user credentials
