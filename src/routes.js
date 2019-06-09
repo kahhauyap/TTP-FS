@@ -10,7 +10,7 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
 
-const store = createStore(rootReducer);
+export const store = createStore(rootReducer);
 
 const Routes = () => (
     <Provider store={store}>

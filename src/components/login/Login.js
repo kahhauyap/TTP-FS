@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import './Login.css'
+import { store } from '../../routes';
 
 class Login extends Component {
     state = {
@@ -15,11 +16,22 @@ class Login extends Component {
     // Update input
     handleInputChange = (event) => {
         this.props.updateUser(event.target.value)
+        console.log(this.props)
         /*
         this.setState({
             [event.target.id]: event.target.value
         })
         */
+    }
+
+    handleEmailChange = (event) => {
+        this.props.updateUser(event.target.value)
+        console.log(store.getState())
+    }
+
+    handlePasswordChange = (event) => {
+        this.props.updatePassword(event.target.value)
+        console.log(store.getState())
     }
 
     // Login POST request to database to validate user credentials
@@ -51,12 +63,12 @@ class Login extends Component {
                     <Form>
                         <Form.Group controlId="email">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="Email" onChange={this.handleInputChange} />
+                            <Form.Control type="email" placeholder="Email" onChange={this.handleEmailChange} />
                         </Form.Group>
 
                         <Form.Group controlId="password">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" onChange={this.handleInputChange} />
+                            <Form.Control type="password" placeholder="Password" onChange={this.handlePasswordChange} />
                         </Form.Group>
                         <div className="button-set">
                             <Button className="login-btn" variant="primary" type="submit" onClick={this.onSubmit}>
