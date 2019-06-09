@@ -4,16 +4,25 @@ import Login from './components/login/Login';
 import Register from './components/login/Register';
 import Portfolio from './components/portfolio/Portfolio';
 import Transactions from './components/transactions/Transactions';
+import LoginApp from './components/login/LoginApp'
+
+import { createStore } from 'redux'
+import { Provider } from 'react-redux';
+import rootReducer from './reducers';
+
+const store = createStore(rootReducer);
 
 const Routes = () => (
-    <Router>
-        <div>
-            <Route exact path="/" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/portfolio" component={Portfolio} />
-            <Route path="/transactions" component={Transactions} />
-        </div>
-    </Router>
+    <Provider store={store}>
+        <Router>
+            <div>
+                <Route exact path="/" component={LoginApp} store={store} />
+                <Route path="/register" component={Register} />
+                <Route path="/portfolio" component={Portfolio} />
+                <Route path="/transactions" component={Transactions} />
+            </div>
+        </Router>
+    </Provider>
 );
 
 export default Routes;

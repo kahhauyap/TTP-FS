@@ -14,9 +14,12 @@ class Login extends Component {
 
     // Update input
     handleInputChange = (event) => {
+        this.props.updateUser(event.target.value)
+        /*
         this.setState({
             [event.target.id]: event.target.value
         })
+        */
     }
 
     // Login POST request to database to validate user credentials
