@@ -5,18 +5,29 @@ import Form from 'react-bootstrap/Form';
 import { withRouter } from "react-router";
 import './Login.css'
 
+
 class Register extends Component {
-    state = {
-        email: '',
-        name: '',
-        password: '',
-        error: ''
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            email: '',
+            name: '',
+            password: '',
+            error: ''
+        }
+
+        this.email = React.createRef();
+        this.name = React.createRef();
+        this.password = React.createRef();
     }
+
 
     handleInputChange = (event) => {
         this.setState({
             [event.target.id]: event.target.value
         })
+        console.log(this.name.current.value)
     }
 
     // Register user then redirect to login page
@@ -39,6 +50,18 @@ class Register extends Component {
                 if (error.response.status === 400)
                     this.setState({ error: "Email already in use" })
             });
+
+    }
+
+    onRegister = (event) => {
+        event.preventDefault();
+        if (!this.validateEmail(this.state.email)) {
+            this.setState({ error: "Not a valid email" })
+            return;
+        }
+        const { name, email, password } = this.state;
+        this.props.registerUser(name, email, password, this.props.history)
+        console.log(this.props.error)
     }
 
     // Validate email
@@ -57,7 +80,7 @@ class Register extends Component {
                     <Form>
                         <Form.Group controlId="name">
                             <Form.Label>Name</Form.Label>
-                            <Form.Control type="name" placeholder="Full name" onChange={this.handleInputChange} />
+                            <Form.Control ref={this.name} type="name" placeholder="Full name" onChange={this.handleInputChange} />
                         </Form.Group>
 
                         <Form.Group controlId="email">
@@ -70,11 +93,11 @@ class Register extends Component {
                             <Form.Control type="password" placeholder="Password" onChange={this.handleInputChange} />
                         </Form.Group>
 
-                        <Button className="login-btn register-btn" variant="primary" type="submit" onClick={this.onSubmit}>
+                        <Button className="login-btn register-btn" variant="primary" type="submit" onClick={this.onRegister}>
                             Sign up
                         </Button>
                     </Form>
-                    <div className="alert-msg login-alert" style={{ marginTop: "1%" }}>{this.state.error} &nbsp;</div>
+                    <div className="alert-msg login-alert" style={{ marginTop: "1%" }}>{this.props.error} &nbsp;</div>
                 </div>
             </div>
         );

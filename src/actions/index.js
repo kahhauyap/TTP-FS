@@ -33,6 +33,7 @@ const loginFail = (error) => ({
     error
 })
 
+// Post User credentials and then dispatch action to set user logged in if success, otherwise set error message states in store
 export const loginUser = (email, password, history) => {
     return dispatch => {
         axios.post('/users/login', {
@@ -49,4 +50,24 @@ export const loginUser = (email, password, history) => {
                     dispatch(loginFail('Incorrect credentials'))
             });
     }
+}
+
+export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const registerFail = (error) => ({
+    type: REGISTER_FAIL,
+    error
+})
+
+export const registerUser = (name, email, password, history) => {
+    return dispatch => axios.post('/users/register', {
+        name,
+        email,
+        password
+    })
+        .then(() => {
+            history.push('/');
+        }).catch(error => {
+            if (error.response.status === 400)
+                dispatch(registerFail('Email already in use'))
+        });
 }

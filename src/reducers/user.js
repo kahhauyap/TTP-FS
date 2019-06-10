@@ -1,4 +1,4 @@
-import { UPDATE_EMAIL, UPDATE_PASSWORD, LOGIN_USER, SET_USER, LOGIN_FAIL, loginUser } from '../actions'
+import { UPDATE_EMAIL, UPDATE_PASSWORD, SET_USER, LOGIN_FAIL, REGISTER_FAIL } from '../actions'
 
 // User reducer to update email and password
 export const user = (state = {
@@ -29,9 +29,17 @@ export const currentUser = (state = { user: '', isLoggedIn: false }, action) => 
 export const loginFail = (state = '', action) => {
     switch (action.type) {
         case LOGIN_FAIL:
-            return { ...state, loginError: action.error };
+            return action.error;
         default:
             return state;
     }
 }
 
+export const registerFail = (state = '', action) => {
+    switch (action.type) {
+        case REGISTER_FAIL:
+            return action.error;
+        default:
+            return state;
+    }
+}

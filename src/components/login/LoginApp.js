@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import { updateEmail, updatePassword, userLogin, loginUser } from '../../actions';
+import { updateEmail, updatePassword, loginUser } from '../../actions';
 import Login from './Login';
 
 const mapStateToProps = (state) => ({
     email: state.user.email,
     password: state.user.password,
-    currentUser: state.currentUser.user,
-    error: state.loginFail.loginError
+    isLoggedIn: state.currentUser.isLoggedIn,
+    error: state.loginFail
 })
 
 const mapDispatchToProps = (dispatch) => ({
