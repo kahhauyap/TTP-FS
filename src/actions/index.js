@@ -6,6 +6,9 @@ export const LOGIN_USER = 'LOGIN_USER';
 export const SET_USER = 'SET_USER';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const REGISTER_FAIL = 'REGISTER_FAIL';
+
 
 export const updateEmail = (email) => ({
     type: UPDATE_EMAIL,
@@ -33,6 +36,15 @@ const loginFail = (error) => ({
     error
 })
 
+const registerFail = (error) => ({
+    type: REGISTER_FAIL,
+    error
+})
+
+export const logoutUser = () => ({
+    type: LOGOUT_USER
+})
+
 // Post User credentials and then dispatch action to set user logged in if success, otherwise set error message states in store
 export const loginUser = (email, password, history) => {
     return dispatch => {
@@ -53,12 +65,6 @@ export const loginUser = (email, password, history) => {
             });
     }
 }
-
-export const REGISTER_FAIL = 'REGISTER_FAIL';
-export const registerFail = (error) => ({
-    type: REGISTER_FAIL,
-    error
-})
 
 export const registerUser = (name, email, password, history) => {
     return dispatch => axios.post('/users/register', {

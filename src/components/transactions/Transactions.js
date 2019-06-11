@@ -14,7 +14,9 @@ class Transactions extends Component {
     }
 
     componentDidMount() {
-        this.getTransactions();
+        //    this.getTransactions();
+        this.getTransactionsR();
+
     }
 
     // Redirect user to transactions page
@@ -50,6 +52,11 @@ class Transactions extends Component {
             .catch(error => console.log(error));
     }
 
+    // Get the transactions from the current user
+    getTransactionsR = () => {
+        this.props.getTransactions()
+    }
+
     // Format the transactions into a list to display
     formatTransactions = (transactions) => {
         let transactionList = [];
@@ -78,10 +85,16 @@ class Transactions extends Component {
         })
     }
 
+    // Set the detailed stock information of selected transaction
+    onClickR = (index) => {
+        const { symbol, shares, date, price } = this.props.transactions[index];
+        this.props.setCurrentTransaction(symbol, shares, date, price);
+    }
+
     // Format the list of transactions pulling the details
     formatList = () => {
-        let transactions = this.state.transactions.map((transaction, index) => {
-            return (<li className="transaction" key={index} onClick={this.onClick.bind(this, index)}>
+        let transactions = this.props.transactions.map((transaction, index) => {
+            return (<li className="transaction" key={index} onClick={this.onClickR.bind(this, index)}>
                 BUY ( <span className="transaction-symbol">  {transaction.symbol} </span>)
                 - {transaction.shares} Shares @<span className="transaction-price"> ${transaction.price}</span>
             </li>)
@@ -122,11 +135,11 @@ class Transactions extends Component {
                         <div className="grid">
                             <div className="transaction-detail trans">
                                 <div>
-                                    <h1 className="symbol-detail">{this.state.symbol}</h1>
+                                    <h1 className="symbol-detail">{this.props.symbol}</h1>
                                     <hr></hr>
-                                    <h2>{this.state.shares} SHARES - <span className="money">${this.state.price}</span></h2>
-                                    <h2>TOTAL - <span className="money">${this.state.price * this.state.shares}</span></h2>
-                                    <h3>PURCHASED - {this.state.date} </h3>
+                                    <h2>{this.props.shares} SHARES - <span className="money">${this.props.price}</span></h2>
+                                    <h2>TOTAL - <span className="money">${this.props.price * this.props.shares}</span></h2>
+                                    <h3>PURCHASED - {this.props.date} </h3>
                                 </div>
                             </div>
                             <div className="back-drop">

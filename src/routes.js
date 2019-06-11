@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Portfolio from './components/portfolio/Portfolio';
 import Transactions from './components/transactions/Transactions';
 
 import { Provider } from 'react-redux';
@@ -11,6 +10,7 @@ import rootReducer from './reducers';
 import LoginApp from './components/login/LoginApp';
 import RegisterApp from './components/login/RegisterApp';
 import PortfolioApp from './components/portfolio/PortfolioApp';
+import TransactionsApp from './components/transactions/TransactionsApp';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -25,7 +25,7 @@ const Routes = () => (
             <Route exact path="/" component={LoginApp} />
             <Route path="/register" component={RegisterApp} />
             <Route path="/portfolio" component={PortfolioApp} />
-            <Route path="/transactions" component={Transactions} />
+            <Route path="/transactions" component={TransactionsApp} />
         </Router>
     </Provider>
 );

@@ -18,9 +18,9 @@ class Portfolio extends Component {
     }
 
     componentDidMount() {
-        this.authenticateUser();
+        // this.authenticateUser();
         // this.getPortfolio();
-        // this.authenticateUserR();
+        this.props.authenticateUser();
         this.props.getPortfolio();
     }
 
@@ -41,17 +41,24 @@ class Portfolio extends Component {
             })
     }
 
-    authenticateUserR = () => {
-        if (!this.props.isLoggedIn) this.props.history.push('/');
-    }
-
-    // Lougout user and redirect to login
+    // Logout user and redirect to login
     logoutUser = () => {
         const { history } = this.props;
         axios.get('/users/logout')
             .catch(error => {
                 console.log(error);
             });
+        history.push('/');
+    }
+
+    // Lougout user and redirect to login
+    logoutUserR = () => {
+        const { history } = this.props;
+        axios.get('/users/logout')
+            .catch(error => {
+                console.log(error);
+            });
+        this.props.logoutUser();
         history.push('/');
     }
 
@@ -85,7 +92,11 @@ class Portfolio extends Component {
                 }
             })
     }
-
+    // Fetch stock information and purchase if balance is enough and symbol is valid
+    buyStockR = () => {
+        let symbol = this.state.symbol.toUpperCase();
+        this.props.buyStock(symbol, this.state.shares);
+    }
     // Fetch user portfolio and get real time stock info from API
     getPortfolio = () => {
         axios.get("/api/portfolio")
@@ -128,17 +139,17 @@ class Portfolio extends Component {
                 <div className="store transaction-detail">
                     <div>
                         <Store
-                            balance={this.state.balance}
-                            error={this.state.error}
+                            balance={this.props.balance}
+                            error={this.props.error}
                             handleInputChange={this.handleInputChange}
                             loading={this.state.isLoading}
-                            buyStock={this.buyStock}>
+                            buyStock={this.buyStockR}>
                         </Store>
                     </div>
                 </div>
                 <Stocks portfolio={this.props.portfolio} isLoading={this.props.isLoading} ></Stocks>
-                <button className="logout-btn btn" onClick={this.logoutUser}>logout</button>
-                <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>logout</Button>
+                <button className="logout-btn btn" onClick={this.logoutUserR}>logout</button>
+                <Button className="logout-btn btn" variant="primary" onClick={this.logoutUserR}>logout</Button>
             </div>
         );
     }
