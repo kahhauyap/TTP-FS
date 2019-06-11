@@ -19,7 +19,9 @@ class Portfolio extends Component {
 
     componentDidMount() {
         this.authenticateUser();
-        this.getPortfolio();
+        // this.getPortfolio();
+        // this.authenticateUserR();
+        this.props.getPortfolio();
     }
 
     // Check if there is a session for current user
@@ -37,6 +39,10 @@ class Portfolio extends Component {
                     history.push('/');
                 }
             })
+    }
+
+    authenticateUserR = () => {
+        if (!this.props.isLoggedIn) this.props.history.push('/');
     }
 
     // Lougout user and redirect to login
@@ -112,7 +118,7 @@ class Portfolio extends Component {
             <div className="background">
                 <div className="nav">
                     <div className="greetings">
-                        <h1 className="header">Portfolio ( <span className="portfolio-balance">${this.state.total}</span> )</h1>
+                        <h1 className="header">Portfolio ( <span className="portfolio-balance">${this.props.total}</span> )</h1>
                     </div>
                     <div className="navigation">
                         <a className="link portfolio-link" href="/portfolio" style={{ fontSize: '21px' }}>PORTFOLIO</a>
@@ -130,7 +136,7 @@ class Portfolio extends Component {
                         </Store>
                     </div>
                 </div>
-                <Stocks portfolio={this.state.portfolio} isLoading={this.state.isLoading} ></Stocks>
+                <Stocks portfolio={this.props.portfolio} isLoading={this.props.isLoading} ></Stocks>
                 <button className="logout-btn btn" onClick={this.logoutUser}>logout</button>
                 <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>logout</Button>
             </div>

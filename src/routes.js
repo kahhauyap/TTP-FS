@@ -10,6 +10,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 import LoginApp from './components/login/LoginApp';
 import RegisterApp from './components/login/RegisterApp';
+import PortfolioApp from './components/portfolio/PortfolioApp';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -23,7 +24,7 @@ const Routes = () => (
         <Router>
             <Route exact path="/" component={LoginApp} />
             <Route path="/register" component={RegisterApp} />
-            <Route path="/portfolio" component={Portfolio} />
+            <Route path="/portfolio" component={PortfolioApp} />
             <Route path="/transactions" component={Transactions} />
         </Router>
     </Provider>

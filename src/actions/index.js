@@ -44,10 +44,12 @@ export const loginUser = (email, password, history) => {
                 dispatch(setCurrentUser(email));
                 history.push('/portfolio');
             }).catch(error => {
-                if (error.response.status === 404)
-                    dispatch(loginFail('User not found'))
-                else if (error.response.status === 400)
-                    dispatch(loginFail('Incorrect credentials'))
+                if (error.response) {
+                    if (error.response.status === 404)
+                        dispatch(loginFail('User not found'))
+                    else if (error.response.status === 400)
+                        dispatch(loginFail('Incorrect credentials'))
+                }
             });
     }
 }
