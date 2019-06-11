@@ -36,7 +36,7 @@ const loginFail = (error) => ({
     error
 })
 
-const registerFail = (error) => ({
+export const registerFail = (error) => ({
     type: REGISTER_FAIL,
     error
 })

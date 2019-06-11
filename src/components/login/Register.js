@@ -27,7 +27,6 @@ class Register extends Component {
         this.setState({
             [event.target.id]: event.target.value
         })
-        console.log(this.name.current.value)
     }
 
     // Register user then redirect to login page
@@ -56,7 +55,7 @@ class Register extends Component {
     onRegister = (event) => {
         event.preventDefault();
         if (!this.validateEmail(this.state.email)) {
-            this.setState({ error: "Not a valid email" })
+            this.props.registerFail("Not a valid email")
             return;
         }
         const { name, email, password } = this.state;
