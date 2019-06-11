@@ -13,7 +13,7 @@ export const portfolio = (state = initialState, action) => {
         case FETCH_PORTFOLIO_SUCCESS:
             return { ...state, portfolio: action.portfolio, total: action.total, isLoading: false }
         case FETCH_PORTFOLIO_FAIL:
-            return state;
+            return { ...state, isLoading: false };
         default:
             return state;
     }

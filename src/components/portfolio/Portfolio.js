@@ -7,52 +7,17 @@ import Stocks from '../stocks/Stocks';
 
 class Portfolio extends Component {
     state = {
-        user: '',
-        balance: 0,
-        portfolio: [],
         symbol: '',
         shares: 0,
-        isLoading: true,
-        error: '',
-        total: 0,
     }
 
     componentDidMount() {
-        // this.authenticateUser();
-        // this.getPortfolio();
         this.props.authenticateUser();
         this.props.getPortfolio();
     }
 
-    // Check if there is a session for current user
-    authenticateUser = () => {
-        axios.get('/users/auth')
-            .then(response => {
-                this.setState({
-                    user: response.data.user,
-                    balance: response.data.balance
-                })
-            })
-            .catch(error => {
-                if (error.response) {
-                    const { history } = this.props;
-                    history.push('/');
-                }
-            })
-    }
-
-    // Logout user and redirect to login
-    logoutUser = () => {
-        const { history } = this.props;
-        axios.get('/users/logout')
-            .catch(error => {
-                console.log(error);
-            });
-        history.push('/');
-    }
-
     // Lougout user and redirect to login
-    logoutUserR = () => {
+    logoutUser = () => {
         const { history } = this.props;
         axios.get('/users/logout')
             .catch(error => {
@@ -77,44 +42,7 @@ class Portfolio extends Component {
     // Fetch stock information and purchase if balance is enough and symbol is valid
     buyStock = () => {
         let symbol = this.state.symbol.toUpperCase();
-        axios.get(`/api/fetch/${symbol}/${this.state.shares}`)
-            .then(response => {
-                this.getPortfolio();
-                this.setState({ balance: response.data.balance, error: `Purchased ${this.state.shares} ${symbol} Share(s)` });
-            })
-            .catch(error => {
-                if (error.response) {
-                    if (error.response.status === 400) {
-                        this.setState({ error: "Not enough balance!" })
-                    } else if (error.response.status === 500) {
-                        this.setState({ error: "Not a valid symbol!" })
-                    }
-                }
-            })
-    }
-    // Fetch stock information and purchase if balance is enough and symbol is valid
-    buyStockR = () => {
-        let symbol = this.state.symbol.toUpperCase();
         this.props.buyStock(symbol, this.state.shares);
-    }
-    // Fetch user portfolio and get real time stock info from API
-    getPortfolio = () => {
-        axios.get("/api/portfolio")
-            .then(response => {
-                let total = 0;
-                response.data.forEach(stock => {
-                    total += (stock.latestPrice * stock.shares);
-                })
-                total = (Math.floor((total) * 100) / 100);
-                this.setState({
-                    portfolio: response.data,
-                    total,
-                    isLoading: false
-                });
-            })
-            .catch(error => {
-                this.setState({ isLoading: false })
-            });
     }
 
     // Update state with input values
@@ -142,14 +70,14 @@ class Portfolio extends Component {
                             balance={this.props.balance}
                             error={this.props.error}
                             handleInputChange={this.handleInputChange}
-                            loading={this.state.isLoading}
-                            buyStock={this.buyStockR}>
+                            loading={this.props.isLoading}
+                            buyStock={this.buyStock}>
                         </Store>
                     </div>
                 </div>
                 <Stocks portfolio={this.props.portfolio} isLoading={this.props.isLoading} ></Stocks>
-                <button className="logout-btn btn" onClick={this.logoutUserR}>logout</button>
-                <Button className="logout-btn btn" variant="primary" onClick={this.logoutUserR}>logout</Button>
+                <button className="logout-btn btn" onClick={this.logoutUser}>logout</button>
+                <Button className="logout-btn btn" variant="primary" onClick={this.logoutUser}>logout</Button>
             </div>
         );
     }

@@ -7,21 +7,12 @@ import './Login.css'
 
 
 class Register extends Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            email: '',
-            name: '',
-            password: '',
-            error: ''
-        }
-
-        this.email = React.createRef();
-        this.name = React.createRef();
-        this.password = React.createRef();
+    state = {
+        email: '',
+        name: '',
+        password: ''
     }
-
 
     handleInputChange = (event) => {
         this.setState({
@@ -30,28 +21,6 @@ class Register extends Component {
     }
 
     // Register user then redirect to login page
-    onSubmit = (event) => {
-        event.preventDefault();
-        if (!this.validateEmail(this.state.email)) {
-            this.setState({ error: "Not a valid email" })
-            return;
-        }
-        axios.post('/users/register', {
-            name: this.state.name,
-            email: this.state.email,
-            password: this.state.password
-        })
-            .then(() => {
-                this.setState({ error: "User registered" })
-                const { history } = this.props;
-                history.push('/');
-            }).catch(error => {
-                if (error.response.status === 400)
-                    this.setState({ error: "Email already in use" })
-            });
-
-    }
-
     onRegister = (event) => {
         event.preventDefault();
         if (!this.validateEmail(this.state.email)) {
@@ -60,7 +29,6 @@ class Register extends Component {
         }
         const { name, email, password } = this.state;
         this.props.registerUser(name, email, password, this.props.history)
-        console.log(this.props.error)
     }
 
     // Validate email
@@ -79,7 +47,7 @@ class Register extends Component {
                     <Form>
                         <Form.Group controlId="name">
                             <Form.Label>Name</Form.Label>
-                            <Form.Control ref={this.name} type="name" placeholder="Full name" onChange={this.handleInputChange} />
+                            <Form.Control type="name" placeholder="Full name" onChange={this.handleInputChange} />
                         </Form.Group>
 
                         <Form.Group controlId="email">

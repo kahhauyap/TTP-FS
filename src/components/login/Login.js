@@ -6,18 +6,6 @@ import { Link } from "react-router-dom";
 import './Login.css'
 
 class Login extends Component {
-    state = {
-        email: '',
-        password: '',
-        error: ''
-    }
-
-    // Update input
-    handleInputChange = (event) => {
-        this.setState({
-            [event.target.id]: event.target.value
-        })
-    }
 
     // Dispatch actions to update user info
     handleEmailChange = (event) => {
@@ -29,24 +17,6 @@ class Login extends Component {
     }
 
     // Login POST request to database to validate user credentials
-    onSubmit = (event) => {
-        event.preventDefault();
-
-        axios.post('/users/login', {
-            email: this.props.email,
-            password: this.props.password
-        })
-            .then(() => {
-                const { history } = this.props;
-                history.push('/portfolio');
-            }).catch(error => {
-                if (error.response.status === 404)
-                    this.setState({ error: "User was not found" })
-                else if (error.response.status === 400)
-                    this.setState({ error: "Incorrect password" })
-            });
-    }
-
     onLogin = (event) => {
         event.preventDefault();
         const { email, password } = this.props;

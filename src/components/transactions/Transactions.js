@@ -4,19 +4,8 @@ import './Transactions.css'
 
 class Transactions extends Component {
 
-    state = {
-        isLoading: false,
-        transactions: [],
-        symbol: '',
-        shares: null,
-        date: null,
-        price: 0
-    }
-
     componentDidMount() {
-        //    this.getTransactions();
-        this.getTransactionsR();
-
+        this.getTransactions();
     }
 
     // Redirect user to transactions page
@@ -33,27 +22,6 @@ class Transactions extends Component {
 
     // Get the transactions from the current user
     getTransactions = () => {
-        axios.get(`/api/transactions`)
-            .then(response => {
-                if (!response.data) this.setState({ isLoading: false })
-                let transactionList = this.formatTransactions(response.data);
-                this.setState({
-                    transactions: transactionList,
-                });
-                // Set default details to the first transaction
-                this.setState({
-                    symbol: this.state.transactions[0].symbol,
-                    shares: this.state.transactions[0].shares,
-                    date: this.state.transactions[0].date,
-                    price: this.state.transactions[0].price,
-                    isLoading: false
-                });
-            })
-            .catch(error => console.log(error));
-    }
-
-    // Get the transactions from the current user
-    getTransactionsR = () => {
         this.props.getTransactions()
     }
 
@@ -76,17 +44,6 @@ class Transactions extends Component {
 
     // Set the detailed stock information of selected transaction
     onClick = (index) => {
-        this.setState({
-            symbol: this.state.transactions[index].symbol,
-            shares: this.state.transactions[index].shares,
-            date: this.state.transactions[index].date,
-            company: this.state.transactions[index].company,
-            price: this.state.transactions[index].price
-        })
-    }
-
-    // Set the detailed stock information of selected transaction
-    onClickR = (index) => {
         const { symbol, shares, date, price } = this.props.transactions[index];
         this.props.setCurrentTransaction(symbol, shares, date, price);
     }
@@ -94,7 +51,7 @@ class Transactions extends Component {
     // Format the list of transactions pulling the details
     formatList = () => {
         let transactions = this.props.transactions.map((transaction, index) => {
-            return (<li className="transaction" key={index} onClick={this.onClickR.bind(this, index)}>
+            return (<li className="transaction" key={index} onClick={this.onClick.bind(this, index)}>
                 BUY ( <span className="transaction-symbol">  {transaction.symbol} </span>)
                 - {transaction.shares} Shares @<span className="transaction-price"> ${transaction.price}</span>
             </li>)
